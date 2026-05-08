@@ -43,6 +43,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 // =============================================
 
 builder.Services.AddScoped<ITopicService, TopicService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages(); // Required for Identity UI scaffolded pages
