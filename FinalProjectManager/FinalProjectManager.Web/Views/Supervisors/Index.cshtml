@@ -1,0 +1,56 @@
+@model IEnumerable<FinalProjectManager.Data.Models.Supervisor>
+@{
+    ViewData["Title"] = "Supervisors";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Supervisors</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Add Supervisor</a>
+</div>
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-auto flex-grow-1">
+        <input type="text" name="search" value="@ViewData["Search"]"
+               class="form-control" placeholder="Search by name or email..." />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-secondary">Search</button>
+        @if (!string.IsNullOrEmpty(ViewData["Search"]?.ToString()))
+        {
+            <a asp-action="Index" class="btn btn-outline-danger ms-1">Clear</a>
+        }
+    </div>
+</form>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No supervisors found.</div>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var supervisor in Model)
+            {
+                <tr>
+                    <td>@supervisor.Id</td>
+                    <td>@supervisor.FullName</td>
+                    <td>@supervisor.Email</td>
+                    <td class="text-end">
+                        <a asp-action="Details" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-info">Details</a>
+                        <a asp-action="Edit" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
