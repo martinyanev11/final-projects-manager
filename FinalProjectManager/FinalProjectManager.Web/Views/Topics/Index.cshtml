@@ -1,0 +1,56 @@
+@model IEnumerable<FinalProjectManager.Data.Models.Topic>
+@{
+    ViewData["Title"] = "Topics";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Thesis Topics</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Add Topic</a>
+</div>
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-auto flex-grow-1">
+        <input type="text" name="search" value="@ViewData["Search"]"
+               class="form-control" placeholder="Search topics..." />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-secondary">Search</button>
+        @if (!string.IsNullOrEmpty(ViewData["Search"]?.ToString()))
+        {
+            <a asp-action="Index" class="btn btn-outline-danger ms-1">Clear</a>
+        }
+    </div>
+</form>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No topics found.</div>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var topic in Model)
+            {
+                <tr>
+                    <td>@topic.Id</td>
+                    <td>@topic.Title</td>
+                    <td>@(topic.Description?.Length > 80 ? topic.Description[..80] + "…" : topic.Description)</td>
+                    <td class="text-end">
+                        <a asp-action="Details" asp-route-id="@topic.Id" class="btn btn-sm btn-outline-info">Details</a>
+                        <a asp-action="Edit" asp-route-id="@topic.Id" class="btn btn-sm btn-outline-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@topic.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

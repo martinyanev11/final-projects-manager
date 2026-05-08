@@ -1,5 +1,7 @@
 using FinalProjectManager.Data.Data;
 using FinalProjectManager.Data.Models;
+using FinalProjectManager.Web.Services;
+using FinalProjectManager.Web.Services.Interfaces;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +41,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 // =============================================
 // 2. MVC & RAZOR PAGES
 // =============================================
+
+builder.Services.AddScoped<ITopicService, TopicService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages(); // Required for Identity UI scaffolded pages
