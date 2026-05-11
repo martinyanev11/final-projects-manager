@@ -11,4 +11,7 @@ public class Student
 
     [Required, MaxLength(100), EmailAddress]
     public string Email { get; set; } = string.Empty;
+
+    public int? TopicId { get; set; }
+    public Topic? Topic { get; set; }
 }

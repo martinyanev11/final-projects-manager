@@ -11,4 +11,6 @@ public class Topic
 
     [MaxLength(2000)]
     public string? Description { get; set; }
+
+    public Student? AssignedStudent { get; set; }
 }
