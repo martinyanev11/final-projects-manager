@@ -65,9 +65,12 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Seed roles and admin user
+// Apply any pending migrations and seed roles/admin user
 using (var scope = app.Services.CreateScope())
+{
+    scope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
     await DataSeeder.SeedAsync(scope.ServiceProvider);
+}
 
 if (!app.Environment.IsDevelopment())
 {

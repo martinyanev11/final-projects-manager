@@ -49,16 +49,14 @@ namespace FinalProjectManager.Data.Migrations
                 table: "Students",
                 column: "ReviewerId",
                 principalTable: "Supervisors",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.SetNull);
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Students_Supervisors_SupervisorId",
                 table: "Students",
                 column: "SupervisorId",
                 principalTable: "Supervisors",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.SetNull);
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Supervisors_Specialisations_SpecialisationId",

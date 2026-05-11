@@ -51,12 +51,12 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .HasOne(s => s.Supervisor)
             .WithMany(sv => sv.SupervisedStudents)
             .HasForeignKey(s => s.SupervisorId)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.ClientSetNull);
 
         builder.Entity<Student>()
             .HasOne(s => s.Reviewer)
             .WithMany(sv => sv.ReviewedStudents)
             .HasForeignKey(s => s.ReviewerId)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.ClientSetNull);
     }
 }
