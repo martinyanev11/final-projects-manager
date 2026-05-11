@@ -4,6 +4,7 @@ using FinalProjectManager.Web.Services.Interfaces;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FinalProjectManager.Web.Controllers;
 
@@ -11,10 +12,12 @@ namespace FinalProjectManager.Web.Controllers;
 public class TopicsController : Controller
 {
     private readonly ITopicService _topicService;
+    private readonly ISpecialisationService _specialisationService;
 
-    public TopicsController(ITopicService topicService)
+    public TopicsController(ITopicService topicService, ISpecialisationService specialisationService)
     {
         _topicService = topicService;
+        _specialisationService = specialisationService;
     }
 
     public async Task<IActionResult> Index(string? search)
@@ -31,13 +34,21 @@ public class TopicsController : Controller
         return View(topic);
     }
 
-    public IActionResult Create() => View();
+    public async Task<IActionResult> Create()
+    {
+        await PopulateSpecialisationsAsync();
+        return View();
+    }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Topic topic)
     {
-        if (!ModelState.IsValid) return View(topic);
+        if (!ModelState.IsValid)
+        {
+            await PopulateSpecialisationsAsync(topic.SpecialisationId);
+            return View(topic);
+        }
         await _topicService.CreateAsync(topic);
         return RedirectToAction(nameof(Index));
     }
@@ -46,6 +57,7 @@ public class TopicsController : Controller
     {
         var topic = await _topicService.GetByIdAsync(id);
         if (topic == null) return NotFound();
+        await PopulateSpecialisationsAsync(topic.SpecialisationId);
         return View(topic);
     }
 
@@ -54,9 +66,19 @@ public class TopicsController : Controller
     public async Task<IActionResult> Edit(int id, Topic topic)
     {
         if (id != topic.Id) return BadRequest();
-        if (!ModelState.IsValid) return View(topic);
-        if (!await _topicService.ExistsAsync(id)) return NotFound();
-        await _topicService.UpdateAsync(topic);
+        if (!ModelState.IsValid)
+        {
+            await PopulateSpecialisationsAsync(topic.SpecialisationId);
+            return View(topic);
+        }
+        var existing = await _topicService.GetByIdAsync(id);
+        if (existing == null) return NotFound();
+
+        existing.Title = topic.Title;
+        existing.Description = topic.Description;
+        existing.SpecialisationId = topic.SpecialisationId;
+
+        await _topicService.UpdateAsync(existing);
         return RedirectToAction(nameof(Index));
     }
 
@@ -73,5 +95,11 @@ public class TopicsController : Controller
     {
         await _topicService.DeleteAsync(id);
         return RedirectToAction(nameof(Index));
+    }
+
+    private async Task PopulateSpecialisationsAsync(int? selectedId = null)
+    {
+        var specialisations = await _specialisationService.GetAllAsync();
+        ViewBag.Specialisations = new SelectList(specialisations, "Id", "Name", selectedId);
     }
 }

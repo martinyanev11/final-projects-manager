@@ -10,4 +10,5 @@ public class Specialisation
     public string Name { get; set; } = string.Empty;
 
     public ICollection<Student> Students { get; set; } = [];
+    public ICollection<Topic> Topics { get; set; } = [];
 }

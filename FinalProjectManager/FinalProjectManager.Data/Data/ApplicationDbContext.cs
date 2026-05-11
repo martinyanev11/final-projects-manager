@@ -34,5 +34,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .WithMany(sp => sp.Students)
             .HasForeignKey(s => s.SpecialisationId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Topic>()
+            .HasOne(t => t.Specialisation)
+            .WithMany(sp => sp.Topics)
+            .HasForeignKey(t => t.SpecialisationId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

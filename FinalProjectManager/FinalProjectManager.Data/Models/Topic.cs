@@ -13,4 +13,8 @@ public class Topic
     public string? Description { get; set; }
 
     public Student? AssignedStudent { get; set; }
+
+    [Required]
+    public int SpecialisationId { get; set; }
+    public Specialisation Specialisation { get; set; } = null!;
 }
