@@ -43,6 +43,44 @@ public class AssignmentsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AutoAssignSupervisors()
+    {
+        try
+        {
+            var count = await _assignmentService.AutoAssignSupervisorsAsync();
+            TempData["Success"] = count == 0
+                ? "All students already have a supervisor assigned."
+                : $"Successfully assigned supervisors to {count} student(s).";
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["Error"] = ex.Message;
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AutoAssignReviewers()
+    {
+        try
+        {
+            var count = await _assignmentService.AutoAssignReviewersAsync();
+            TempData["Success"] = count == 0
+                ? "All students already have a reviewer assigned."
+                : $"Successfully assigned reviewers to {count} student(s).";
+        }
+        catch (InvalidOperationException ex)
+        {
+            TempData["Error"] = ex.Message;
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
+
     // Task 9 — manual override
     public async Task<IActionResult> EditTopic(int studentId)
     {

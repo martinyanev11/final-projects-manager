@@ -17,7 +17,7 @@ public class SupervisorService : ISupervisorService
 
     public async Task<IEnumerable<Supervisor>> GetAllAsync(string? search = null)
     {
-        var query = _context.Supervisors.AsQueryable();
+        var query = _context.Supervisors.Include(s => s.Specialisation).AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(search))
             query = query.Where(s => s.FullName.Contains(search) || s.Email.Contains(search));
@@ -26,7 +26,7 @@ public class SupervisorService : ISupervisorService
     }
 
     public async Task<Supervisor?> GetByIdAsync(int id)
-        => await _context.Supervisors.FindAsync(id);
+        => await _context.Supervisors.Include(s => s.Specialisation).FirstOrDefaultAsync(s => s.Id == id);
 
     public async Task CreateAsync(Supervisor supervisor)
     {

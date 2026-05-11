@@ -2,18 +2,38 @@
 @{
     ViewData["Title"] = "Topic Assignments";
     var unassigned = Model.Count(s => s.TopicId == null);
+    var noSupervisor = Model.Count(s => s.SupervisorId == null);
+    var noReviewer = Model.Count(s => s.ReviewerId == null);
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Topic Assignments</h2>
-    <form asp-action="AutoAssign" method="post">
-        @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-primary"
-                onclick="return confirm('Auto-assign topics to all @unassigned unassigned student(s)?')"
-                @(unassigned == 0 ? "disabled" : "")>
-            Auto-assign (@unassigned unassigned)
-        </button>
-    </form>
+    <h2>Assignments</h2>
+    <div class="d-flex gap-2">
+        <form asp-action="AutoAssign" method="post">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-primary"
+                    onclick="return confirm('Auto-assign topics to all @unassigned unassigned student(s)?')"
+                    @(unassigned == 0 ? "disabled" : "")>
+                Auto-assign Topics (@unassigned)
+            </button>
+        </form>
+        <form asp-action="AutoAssignSupervisors" method="post">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-success"
+                    onclick="return confirm('Auto-assign supervisors to @noSupervisor student(s)?')"
+                    @(noSupervisor == 0 ? "disabled" : "")>
+                Auto-assign Supervisors (@noSupervisor)
+            </button>
+        </form>
+        <form asp-action="AutoAssignReviewers" method="post">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-info"
+                    onclick="return confirm('Auto-assign reviewers to @noReviewer student(s)?')"
+                    @(noReviewer == 0 ? "disabled" : "")>
+                Auto-assign Reviewers (@noReviewer)
+            </button>
+        </form>
+    </div>
 </div>
 
 @if (TempData["Success"] != null)
@@ -41,8 +61,10 @@ else
         <thead class="table-dark">
             <tr>
                 <th>Student</th>
-                <th>Email</th>
+                <th>Specialisation</th>
                 <th>Assigned Topic</th>
+                <th>Supervisor</th>
+                <th>Reviewer</th>
                 <th class="text-end">Action</th>
             </tr>
         </thead>
@@ -51,11 +73,31 @@ else
             {
                 <tr>
                     <td>@student.FullName</td>
-                    <td>@student.Email</td>
+                    <td>@student.Specialisation?.Name</td>
                     <td>
                         @if (student.Topic != null)
                         {
                             <span class="badge bg-success">@student.Topic.Title</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Not assigned</span>
+                        }
+                    </td>
+                    <td>
+                        @if (student.Supervisor != null)
+                        {
+                            <span class="badge bg-success">@student.Supervisor.FullName</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Not assigned</span>
+                        }
+                    </td>
+                    <td>
+                        @if (student.Reviewer != null)
+                        {
+                            <span class="badge bg-success">@student.Reviewer.FullName</span>
                         }
                         else
                         {

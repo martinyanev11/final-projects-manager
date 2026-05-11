@@ -40,5 +40,23 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .WithMany(sp => sp.Topics)
             .HasForeignKey(t => t.SpecialisationId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Supervisor>()
+            .HasOne(sv => sv.Specialisation)
+            .WithMany(sp => sp.Supervisors)
+            .HasForeignKey(sv => sv.SpecialisationId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Student>()
+            .HasOne(s => s.Supervisor)
+            .WithMany(sv => sv.SupervisedStudents)
+            .HasForeignKey(s => s.SupervisorId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        builder.Entity<Student>()
+            .HasOne(s => s.Reviewer)
+            .WithMany(sv => sv.ReviewedStudents)
+            .HasForeignKey(s => s.ReviewerId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

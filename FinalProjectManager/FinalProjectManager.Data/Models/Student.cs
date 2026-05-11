@@ -24,4 +24,10 @@ public class Student
 
     [Required, MaxLength(2)]
     public string ClassName { get; set; } = string.Empty;
+
+    public int? SupervisorId { get; set; }
+    public Supervisor? Supervisor { get; set; }
+
+    public int? ReviewerId { get; set; }
+    public Supervisor? Reviewer { get; set; }
 }
