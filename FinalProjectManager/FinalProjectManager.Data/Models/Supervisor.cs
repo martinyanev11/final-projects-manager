@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
+using FinalProjectManager.Data.Constants;
+
 namespace FinalProjectManager.Data.Models;
 
 public class Supervisor
@@ -7,6 +9,7 @@ public class Supervisor
     public int Id { get; set; }
 
     [Required, MaxLength(100)]
+    [RegularExpression(ValidationPatterns.BulgarianName, ErrorMessage = ValidationPatterns.BulgarianNameMessage)]
     public string FullName { get; set; } = string.Empty;
 
     [Required, MaxLength(100), EmailAddress]
