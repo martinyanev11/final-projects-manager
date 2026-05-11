@@ -32,6 +32,12 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Supervisors" asp-action="Index">Supervisors</a>
                         </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-warning" asp-controller="Admin" asp-action="PendingApprovals">Admin Panel</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
