@@ -1,10 +1,13 @@
+using FinalProjectManager.Data.Constants;
 using FinalProjectManager.Data.Models;
 using FinalProjectManager.Web.Services.Interfaces;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProjectManager.Web.Controllers;
 
+[Authorize(Roles = AppRoles.Admin)]
 public class TopicsController : Controller
 {
     private readonly ITopicService _topicService;

@@ -1,0 +1,67 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h2 class="mb-4">Admin Dashboard</h2>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card h-100 border-primary">
+            <div class="card-body">
+                <h5 class="card-title">Topics</h5>
+                <p class="card-text text-muted">Manage thesis topics — create, edit, and delete.</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a asp-controller="Topics" asp-action="Index" class="btn btn-primary btn-sm">Manage Topics</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 border-success">
+            <div class="card-body">
+                <h5 class="card-title">Students</h5>
+                <p class="card-text text-muted">Manage student records — create, edit, and delete.</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a asp-controller="Students" asp-action="Index" class="btn btn-success btn-sm">Manage Students</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 border-info">
+            <div class="card-body">
+                <h5 class="card-title">Supervisors</h5>
+                <p class="card-text text-muted">Manage supervisor records — create, edit, and delete.</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a asp-controller="Supervisors" asp-action="Index" class="btn btn-info btn-sm">Manage Supervisors</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 border-warning">
+            <div class="card-body">
+                <h5 class="card-title">Pending Approvals</h5>
+                <p class="card-text text-muted">Review and approve supervisor registration requests.</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a asp-action="PendingApprovals" class="btn btn-warning btn-sm">View Pending</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 border-secondary">
+            <div class="card-body">
+                <h5 class="card-title">All Supervisors</h5>
+                <p class="card-text text-muted">View all registered supervisors and their approval status.</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a asp-action="AllSupervisors" class="btn btn-secondary btn-sm">View Supervisors</a>
+            </div>
+        </div>
+    </div>
+</div>
