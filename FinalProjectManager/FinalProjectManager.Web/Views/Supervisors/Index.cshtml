@@ -34,6 +34,7 @@ else
                 <th>#</th>
                 <th>Full Name</th>
                 <th>Email</th>
+                <th>Specialisation</th>
                 <th class="text-end">Actions</th>
             </tr>
         </thead>
@@ -44,6 +45,7 @@ else
                     <td>@supervisor.Id</td>
                     <td>@supervisor.FullName</td>
                     <td>@supervisor.Email</td>
+                    <td>@supervisor.Specialisation?.Name</td>
                     <td class="text-end">
                         <a asp-action="Details" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-info">Details</a>
                         <a asp-action="Edit" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-warning">Edit</a>

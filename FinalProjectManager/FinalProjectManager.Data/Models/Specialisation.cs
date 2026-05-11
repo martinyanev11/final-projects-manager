@@ -14,4 +14,5 @@ public class Specialisation
 
     public ICollection<Student> Students { get; set; } = [];
     public ICollection<Topic> Topics { get; set; } = [];
+    public ICollection<Supervisor> Supervisors { get; set; } = [];
 }

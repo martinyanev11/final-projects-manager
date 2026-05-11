@@ -19,6 +19,8 @@ public class AssignmentService : IAssignmentService
         await _context.Students
             .Include(s => s.Topic)
             .Include(s => s.Specialisation)
+            .Include(s => s.Supervisor)
+            .Include(s => s.Reviewer)
             .OrderBy(s => s.FullName)
             .ToListAsync();
 
@@ -89,5 +91,83 @@ public class AssignmentService : IAssignmentService
 
         student.TopicId = topicId;
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<int> AutoAssignSupervisorsAsync()
+    {
+        var unassignedStudents = await _context.Students
+            .Include(s => s.Specialisation)
+            .Where(s => s.SupervisorId == null)
+            .ToListAsync();
+
+        if (unassignedStudents.Count == 0)
+            return 0;
+
+        foreach (var group in unassignedStudents.GroupBy(s => s.SpecialisationId))
+        {
+            var students = group.ToList();
+            var specialisationName = students[0].Specialisation.Name;
+
+            var supervisors = await _context.Supervisors
+                .Include(sv => sv.SupervisedStudents)
+                .Where(sv => sv.SpecialisationId == group.Key)
+                .ToListAsync();
+
+            // Expand each supervisor into (4 - currentCount) slots, shuffle, assign one per student
+            var slots = supervisors
+                .SelectMany(sv => Enumerable.Repeat(sv.Id, 4 - sv.SupervisedStudents.Count))
+                .OrderBy(_ => Guid.NewGuid())
+                .ToList();
+
+            if (slots.Count < students.Count)
+                throw new InvalidOperationException(
+                    $"Not enough supervisor capacity for specialisation \"{specialisationName}\": " +
+                    $"{students.Count} student(s) need a supervisor but only {slots.Count} slot(s) are available.");
+
+            for (var i = 0; i < students.Count; i++)
+                students[i].SupervisorId = slots[i];
+        }
+
+        await _context.SaveChangesAsync();
+        return unassignedStudents.Count;
+    }
+
+    public async Task<int> AutoAssignReviewersAsync()
+    {
+        var students = await _context.Students
+            .Include(s => s.Specialisation)
+            .Where(s => s.ReviewerId == null && s.SupervisorId != null)
+            .ToListAsync();
+
+        if (students.Count == 0)
+            return 0;
+
+        foreach (var group in students.GroupBy(s => s.SpecialisationId))
+        {
+            var groupStudents = group.ToList();
+            var specialisationName = groupStudents[0].Specialisation.Name;
+
+            var supervisors = await _context.Supervisors
+                .Where(sv => sv.SpecialisationId == group.Key)
+                .ToListAsync();
+
+            foreach (var student in groupStudents)
+            {
+                var eligible = supervisors
+                    .Where(sv => sv.Id != student.SupervisorId)
+                    .OrderBy(_ => Guid.NewGuid())
+                    .ToList();
+
+                if (eligible.Count == 0)
+                    throw new InvalidOperationException(
+                        $"No eligible reviewer for student \"{student.FullName}\" " +
+                        $"in specialisation \"{specialisationName}\": at least one other supervisor is required.");
+
+                student.ReviewerId = eligible[0].Id;
+            }
+        }
+
+        await _context.SaveChangesAsync();
+        return students.Count;
     }
 }
