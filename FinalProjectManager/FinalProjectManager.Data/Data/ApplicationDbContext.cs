@@ -15,6 +15,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Topic> Topics { get; set; }
     public DbSet<Student> Students { get; set; }
     public DbSet<Supervisor> Supervisors { get; set; }
+    public DbSet<Specialisation> Specialisations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -27,5 +28,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .WithOne(t => t.AssignedStudent)
             .HasForeignKey<Student>(s => s.TopicId)
             .OnDelete(DeleteBehavior.SetNull);
+
+        builder.Entity<Student>()
+            .HasOne(s => s.Specialisation)
+            .WithMany(sp => sp.Students)
+            .HasForeignKey(s => s.SpecialisationId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -16,6 +16,12 @@
 
     <dt class="col-sm-3">Email</dt>
     <dd class="col-sm-9">@Model.Email</dd>
+
+    <dt class="col-sm-3">Specialisation</dt>
+    <dd class="col-sm-9">@Model.Specialisation?.Name</dd>
+
+    <dt class="col-sm-3">Class</dt>
+    <dd class="col-sm-9">@Model.ClassName</dd>
 </dl>
 
 <form asp-action="Delete">

@@ -23,6 +23,22 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
+            <div class="mb-3">
+                <label asp-for="SpecialisationId" class="form-label">Specialisation</label>
+                <select asp-for="SpecialisationId" asp-items="ViewBag.Specialisations" class="form-select">
+                    <option value="">— Select specialisation —</option>
+                </select>
+                <span asp-validation-for="SpecialisationId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ClassName" class="form-label">Class</label>
+                <select asp-for="ClassName" asp-items="ViewBag.ClassNames" class="form-select">
+                    <option value="">— Select class —</option>
+                </select>
+                <span asp-validation-for="ClassName" class="text-danger"></span>
+            </div>
+
             <button type="submit" class="btn btn-primary">Create</button>
             <a asp-action="Index" class="btn btn-secondary ms-1">Cancel</a>
         </form>

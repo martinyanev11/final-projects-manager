@@ -14,4 +14,11 @@ public class Student
 
     public int? TopicId { get; set; }
     public Topic? Topic { get; set; }
+
+    [Required]
+    public int SpecialisationId { get; set; }
+    public Specialisation Specialisation { get; set; } = null!;
+
+    [Required, MaxLength(2)]
+    public string ClassName { get; set; } = string.Empty;
 }

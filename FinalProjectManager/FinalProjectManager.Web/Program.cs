@@ -54,6 +54,7 @@ builder.Services.AddScoped<IAssignmentService, AssignmentService>();
 builder.Services.AddScoped<ITopicService, TopicService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ISupervisorService, SupervisorService>();
+builder.Services.AddScoped<ISpecialisationService, SpecialisationService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
