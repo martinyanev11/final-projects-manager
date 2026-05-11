@@ -17,7 +17,7 @@ public class StudentService : IStudentService
 
     public async Task<IEnumerable<Student>> GetAllAsync(string? search = null)
     {
-        var query = _context.Students.AsQueryable();
+        var query = _context.Students.Include(s => s.Specialisation).AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(search))
             query = query.Where(s => s.FullName.Contains(search) || s.Email.Contains(search));
@@ -26,7 +26,7 @@ public class StudentService : IStudentService
     }
 
     public async Task<Student?> GetByIdAsync(int id)
-        => await _context.Students.FindAsync(id);
+        => await _context.Students.Include(s => s.Specialisation).FirstOrDefaultAsync(s => s.Id == id);
 
     public async Task CreateAsync(Student student)
     {
