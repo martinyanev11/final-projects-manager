@@ -1,0 +1,51 @@
+@model FinalProjectManager.Data.Models.Student
+@{
+    ViewData["Title"] = "Edit Student";
+}
+
+<h2>Edit Student</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="FullName" class="form-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" type="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="SpecialisationId" class="form-label">Specialisation</label>
+                <select asp-for="SpecialisationId" asp-items="ViewBag.Specialisations" class="form-select">
+                    <option value="">— Select specialisation —</option>
+                </select>
+                <span asp-validation-for="SpecialisationId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ClassName" class="form-label">Class</label>
+                <select asp-for="ClassName" asp-items="ViewBag.ClassNames" class="form-select">
+                    <option value="">— Select class —</option>
+                </select>
+                <span asp-validation-for="ClassName" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-warning">Save</button>
+            <a asp-action="Index" class="btn btn-secondary ms-1">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

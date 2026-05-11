@@ -1,0 +1,28 @@
+@model FinalProjectManager.Data.Models.Topic
+@{
+    ViewData["Title"] = "Delete Topic";
+}
+
+<h2>Delete Topic</h2>
+<hr />
+
+<div class="alert alert-danger">
+    Are you sure you want to delete this topic?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Title</dt>
+    <dd class="col-sm-9">@Model.Title</dd>
+
+    <dt class="col-sm-3">Specialisation</dt>
+    <dd class="col-sm-9">@Model.Specialisation?.Name</dd>
+
+    <dt class="col-sm-3">Description</dt>
+    <dd class="col-sm-9">@(Model.Description ?? "—")</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary ms-1">Cancel</a>
+</form>

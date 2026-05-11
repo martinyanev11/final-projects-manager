@@ -1,0 +1,50 @@
+@model IEnumerable<FinalProjectManager.Data.Models.Specialisation>
+@{
+    ViewData["Title"] = "Specialisations";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Specialisations</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Add Specialisation</a>
+</div>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No specialisations found.</div>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Students</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model)
+            {
+                <tr>
+                    <td>@s.Id</td>
+                    <td>@s.Name</td>
+                    <td>@s.Students.Count</td>
+                    <td class="text-end">
+                        <a asp-action="Details" asp-route-id="@s.Id" class="btn btn-sm btn-outline-info">Details</a>
+                        <a asp-action="Edit" asp-route-id="@s.Id" class="btn btn-sm btn-outline-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@s.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
