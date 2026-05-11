@@ -1,0 +1,37 @@
+@model FinalProjectManager.Web.ViewModels.TopicAssignmentViewModel
+@{
+    ViewData["Title"] = "Change Topic Assignment";
+}
+
+<h2>Change Topic Assignment</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="EditTopic" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+            <input type="hidden" asp-for="StudentId" />
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Student</label>
+                <p class="form-control-plaintext">@Model.StudentName</p>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="TopicId" class="form-label">Assigned Topic</label>
+                <select asp-for="TopicId" asp-items="Model.AvailableTopics" class="form-select">
+                    <option value="">— No topic —</option>
+                </select>
+                <span asp-validation-for="TopicId" class="text-danger small"></span>
+            </div>
+
+            <button type="submit" class="btn btn-warning">Save</button>
+            <a asp-action="Index" class="btn btn-secondary ms-1">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
