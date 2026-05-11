@@ -1,5 +1,9 @@
 using FinalProjectManager.Data.Data;
 using FinalProjectManager.Data.Models;
+using FinalProjectManager.Web.Configuration;
+using FinalProjectManager.Web.Identity;
+using FinalProjectManager.Web.Middleware;
+using FinalProjectManager.Web.Seeding;
 using FinalProjectManager.Web.Services;
 using FinalProjectManager.Web.Services.Interfaces;
 
@@ -28,32 +32,40 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     options.Password.RequireUppercase = false;
 
     // Sign-in settings
-    options.SignIn.RequireConfirmedAccount = false; // Set to true if you add email confirmation later
+    options.SignIn.RequireConfirmedAccount = false;
 
     // Lockout settings
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
     options.Lockout.MaxFailedAccessAttempts = 5;
 })
-.AddRoles<IdentityRole>()              // Enables role management
+.AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>()
-.AddDefaultTokenProviders();
+.AddDefaultTokenProviders()
+.AddClaimsPrincipalFactory<ApplicationUserClaimsFactory>();
 
 // =============================================
-// 2. MVC & RAZOR PAGES
+// 2. APPLICATION SERVICES
 // =============================================
 
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Email"));
+
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ITopicService, TopicService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ISupervisorService, SupervisorService>();
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages(); // Required for Identity UI scaffolded pages
+builder.Services.AddRazorPages();
 
 // =============================================
 // 3. PIPELINE
 // =============================================
 
 var app = builder.Build();
+
+// Seed roles and admin user
+using (var scope = app.Services.CreateScope())
+    await DataSeeder.SeedAsync(scope.ServiceProvider);
 
 if (!app.Environment.IsDevelopment())
 {
@@ -66,15 +78,16 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication(); // Must come BEFORE UseAuthorization
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<PendingApprovalMiddleware>();
 
 // Default MVC route
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// Required for Identity Razor Pages (/Account/Login, /Account/Register, etc.)
 app.MapRazorPages();
 
 app.Run();
