@@ -115,7 +115,7 @@ public class AssignmentService : IAssignmentService
 
             // Expand each supervisor into (4 - currentCount) slots, shuffle, assign one per student
             var slots = supervisors
-                .SelectMany(sv => Enumerable.Repeat(sv.Id, 4 - sv.SupervisedStudents.Count))
+                .SelectMany(sv => Enumerable.Repeat(sv.Id, Math.Max(0, 4 - sv.SupervisedStudents.Count)))
                 .OrderBy(_ => Guid.NewGuid())
                 .ToList();
 

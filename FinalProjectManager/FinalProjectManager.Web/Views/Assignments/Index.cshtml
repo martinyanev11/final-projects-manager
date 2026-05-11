@@ -3,7 +3,7 @@
     ViewData["Title"] = "Topic Assignments";
     var unassigned = Model.Count(s => s.TopicId == null);
     var noSupervisor = Model.Count(s => s.SupervisorId == null);
-    var noReviewer = Model.Count(s => s.ReviewerId == null);
+    var noReviewer = Model.Count(s => s.ReviewerId == null && s.SupervisorId != null);
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
