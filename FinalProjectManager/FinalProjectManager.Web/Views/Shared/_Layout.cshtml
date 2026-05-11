@@ -23,19 +23,21 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Topics" asp-action="Index">Topics</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Students" asp-action="Index">Students</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Supervisors" asp-action="Index">Supervisors</a>
-                        </li>
                         @if (User.IsInRole("Admin"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-warning" asp-controller="Admin" asp-action="PendingApprovals">Admin Panel</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-warning" href="#" role="button"
+                                   data-bs-toggle="dropdown">Admin</a>
+                                <ul class="dropdown-menu dropdown-menu-dark">
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Dashboard</a></li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item" asp-controller="Topics" asp-action="Index">Topics</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Students" asp-action="Index">Students</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Supervisors" asp-action="Index">Supervisors</a></li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="PendingApprovals">Pending Approvals</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="AllSupervisors">All Supervisors</a></li>
+                                </ul>
                             </li>
                         }
                     </ul>

@@ -18,6 +18,8 @@ public class AdminController : Controller
         _userManager = userManager;
     }
 
+    public IActionResult Index() => View();
+
     public async Task<IActionResult> PendingApprovals()
     {
         var supervisors = await _userManager.GetUsersInRoleAsync(AppRoles.Supervisor);
