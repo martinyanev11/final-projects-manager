@@ -8,7 +8,7 @@ public class PendingApprovalMiddleware
 
     private static readonly PathString[] _allowedPaths =
     [
-        new("/SupervisorRegistration/PendingApproval"),
+        new("/Account/PendingApproval"),
         new("/Identity"),
     ];
 
@@ -22,14 +22,13 @@ public class PendingApprovalMiddleware
         var user = context.User;
         var path = context.Request.Path;
 
-        var isUnapprovedSupervisor =
+        var isUnapproved =
             user.Identity?.IsAuthenticated == true
-            && user.IsInRole(AppRoles.Supervisor)
             && user.FindFirst("IsApproved")?.Value == "false";
 
-        if (isUnapprovedSupervisor && !IsAllowed(path))
+        if (isUnapproved && !IsAllowed(path))
         {
-            context.Response.Redirect("/SupervisorRegistration/PendingApproval");
+            context.Response.Redirect("/Account/PendingApproval");
             return;
         }
 

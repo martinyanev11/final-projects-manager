@@ -1,0 +1,102 @@
+@model FinalProjectManager.Web.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h3 class="card-title mb-1">Регистрация</h3>
+                <p class="text-muted small mb-4">Вашият акаунт ще бъде прегледан от администратор, преди да получите достъп до системата.</p>
+
+                <form asp-action="Register">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label">Пълно име</label>
+                        <input asp-for="FullName" class="form-control" placeholder="Пълно име" autofocus />
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label">Имейл</label>
+                        <input asp-for="Email" class="form-control" type="email" placeholder="example@mail.com" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="UserType" class="form-label">Тип потребител</label>
+                        <select asp-for="UserType" class="form-select" id="userTypeSelect">
+                            <option value="">Изберете тип...</option>
+                            <option value="Student">Ученик</option>
+                            <option value="Supervisor">Учител</option>
+                        </select>
+                        <span asp-validation-for="UserType" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3" id="classDivisionSection" style="display: none;">
+                        <label class="form-label">Клас и Паралелка</label>
+                        <div class="input-group">
+                            <span class="input-group-text">12</span>
+                            <select asp-for="ClassDivision" class="form-select">
+                                <option value="А">А</option>
+                                <option value="Б">Б</option>
+                                <option value="В">В</option>
+                                <option value="Г">Г</option>
+                                <option value="Д">Д</option>
+                                <option value="Е">Е</option>
+                                <option value="Ж">Ж</option>
+                                <option value="З">З</option>
+                                <option value="И">И</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="ClassDivision" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="SpecializationId" class="form-label">Специалност</label>
+                        <select asp-for="SpecializationId" class="form-select" asp-items="ViewBag.Specializations">
+                            <option value="">Изберете специалност...</option>
+                        </select>
+                        <span asp-validation-for="SpecializationId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label">Парола</label>
+                        <input asp-for="Password" class="form-control" type="password" placeholder="Парола" />
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="ConfirmPassword" class="form-label">Потвърди парола</label>
+                        <input asp-for="ConfirmPassword" class="form-control" type="password" placeholder="Потвърди парола" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Регистрирай се</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $('#userTypeSelect').change(function () {
+                if ($(this).val() === 'Student') {
+                    $('#classDivisionSection').show();
+                } else {
+                    $('#classDivisionSection').hide();
+                }
+            });
+
+            // Trigger on page load in case of validation error
+            if ($('#userTypeSelect').val() === 'Student') {
+                $('#classDivisionSection').show();
+            }
+        });
+    </script>
+}

@@ -1,0 +1,68 @@
+@model IEnumerable<FinalProjectManager.Web.Controllers.UserViewModel>
+@using FinalProjectManager.Data.Constants
+@{
+    ViewData["Title"] = "Управление на потребители";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Потребители</h2>
+    <div class="btn-group">
+        <a asp-action="Users" asp-route-roleFilter="" class="btn btn-outline-secondary @(string.IsNullOrEmpty(ViewBag.RoleFilter) ? "active" : "")">Всички</a>
+        <a asp-action="Users" asp-route-roleFilter="@AppRoles.Student" class="btn btn-outline-secondary @(ViewBag.RoleFilter == AppRoles.Student ? "active" : "")">Ученици</a>
+        <a asp-action="Users" asp-route-roleFilter="@AppRoles.Supervisor" class="btn btn-outline-secondary @(ViewBag.RoleFilter == AppRoles.Supervisor ? "active" : "")">Учители</a>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Име</th>
+                    <th>Имейл</th>
+                    <th>Роля</th>
+                    <th>Специалност</th>
+                    <th>Клас</th>
+                    <th>Статус</th>
+                    <th class="text-end">Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.FullName</td>
+                        <td>@user.Email</td>
+                        <td>
+                            @foreach (var role in user.Roles)
+                            {
+                                <span class="badge bg-info text-dark">@(role == AppRoles.Student ? "Ученик" : (role == AppRoles.Supervisor ? "Учител" : role))</span>
+                            }
+                        </td>
+                        <td>@user.Specialization</td>
+                        <td>@user.ClassDivision</td>
+                        <td>
+                            @if (user.IsApproved)
+                            {
+                                <span class="badge bg-success">Одобрен</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning text-dark">Чакащ</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <form asp-action="ToggleAdmin" method="post" class="d-inline">
+                                <input type="hidden" name="userId" value="@user.Id" />
+                                <button type="submit" class="btn btn-sm btn-outline-dark" 
+                                        onclick="return confirm('Сигурни ли сте, че искате да промените правата на този потребител?')">
+                                    @(user.Roles.Contains(AppRoles.Admin) ? "Премахни Админ" : "Направи Админ")
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

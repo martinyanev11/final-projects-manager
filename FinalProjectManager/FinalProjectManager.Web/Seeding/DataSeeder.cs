@@ -36,5 +36,17 @@ public static class DataSeeder
             if (result.Succeeded)
                 await userManager.AddToRoleAsync(admin, AppRoles.Admin);
         }
+
+        var dbContext = services.GetRequiredService<FinalProjectManager.Data.Data.ApplicationDbContext>();
+        if (!dbContext.Specializations.Any())
+        {
+            dbContext.Specializations.AddRange(
+                new Specialization { Name = "Приложно програмиране" },
+                new Specialization { Name = "Системно програмиране" },
+                new Specialization { Name = "Компютърни мрежи" },
+                new Specialization { Name = "Икономическа информатика" }
+            );
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

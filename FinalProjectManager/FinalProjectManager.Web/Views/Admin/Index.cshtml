@@ -1,18 +1,18 @@
 @{
-    ViewData["Title"] = "Admin Dashboard";
+    ViewData["Title"] = "Админ Табло";
 }
 
-<h2 class="mb-4">Admin Dashboard</h2>
+<h2 class="mb-4">Админ Табло</h2>
 
 <div class="row g-4">
     <div class="col-md-4">
         <div class="card h-100 border-primary">
             <div class="card-body">
-                <h5 class="card-title">Topics</h5>
-                <p class="card-text text-muted">Manage thesis topics — create, edit, and delete.</p>
+                <h5 class="card-title">Дипломни работи</h5>
+                <p class="card-text text-muted">Преглед и управление на всички дипломни работи.</p>
             </div>
             <div class="card-footer bg-transparent">
-                <a asp-controller="Topics" asp-action="Index" class="btn btn-primary btn-sm">Manage Topics</a>
+                <a asp-action="DiplomaProjects" class="btn btn-primary btn-sm">Виж Дипломни Работи</a>
             </div>
         </div>
     </div>
@@ -20,35 +20,11 @@
     <div class="col-md-4">
         <div class="card h-100 border-success">
             <div class="card-body">
-                <h5 class="card-title">Students</h5>
-                <p class="card-text text-muted">Manage student records — create, edit, and delete.</p>
+                <h5 class="card-title">Потребители</h5>
+                <p class="card-text text-muted">Управление на ученици и учители — филтриране и преглед.</p>
             </div>
             <div class="card-footer bg-transparent">
-                <a asp-controller="Students" asp-action="Index" class="btn btn-success btn-sm">Manage Students</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card h-100 border-info">
-            <div class="card-body">
-                <h5 class="card-title">Supervisors</h5>
-                <p class="card-text text-muted">Manage supervisor records — create, edit, and delete.</p>
-            </div>
-            <div class="card-footer bg-transparent">
-                <a asp-controller="Supervisors" asp-action="Index" class="btn btn-info btn-sm">Manage Supervisors</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card h-100 border-dark">
-            <div class="card-body">
-                <h5 class="card-title">Topic Assignments</h5>
-                <p class="card-text text-muted">Auto-assign topics to students or override individual assignments.</p>
-            </div>
-            <div class="card-footer bg-transparent">
-                <a asp-controller="Assignments" asp-action="Index" class="btn btn-dark btn-sm">Manage Assignments</a>
+                <a asp-action="Users" class="btn btn-success btn-sm">Управление на Потребители</a>
             </div>
         </div>
     </div>
@@ -56,11 +32,35 @@
     <div class="col-md-4">
         <div class="card h-100 border-warning">
             <div class="card-body">
-                <h5 class="card-title">Pending Approvals</h5>
-                <p class="card-text text-muted">Review and approve supervisor registration requests.</p>
+                <h5 class="card-title">Чакащи одобрение</h5>
+                <p class="card-text text-muted">Преглед и одобрение на нови регистрации.</p>
             </div>
             <div class="card-footer bg-transparent">
-                <a asp-action="PendingApprovals" class="btn btn-warning btn-sm">View Pending</a>
+                <a asp-action="PendingApprovals" class="btn btn-warning btn-sm">Виж Чакащи</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 border-info">
+            <div class="card-body">
+                <h5 class="card-title">Теми</h5>
+                <p class="card-text text-muted">Управление на теми за дипломни работи.</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a asp-controller="Topics" asp-action="Index" class="btn btn-info btn-sm">Управление на Теми</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 border-dark">
+            <div class="card-body">
+                <h5 class="card-title">Разпределение</h5>
+                <p class="card-text text-muted">Автоматично разпределение на теми или ръчна промяна.</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a asp-controller="Assignments" asp-action="Index" class="btn btn-dark btn-sm">Управление на Разпределение</a>
             </div>
         </div>
     </div>
@@ -68,11 +68,11 @@
     <div class="col-md-4">
         <div class="card h-100 border-secondary">
             <div class="card-body">
-                <h5 class="card-title">All Supervisors</h5>
-                <p class="card-text text-muted">View all registered supervisors and their approval status.</p>
+                <h5 class="card-title">Специалности</h5>
+                <p class="card-text text-muted">Управление на учебните специалности.</p>
             </div>
             <div class="card-footer bg-transparent">
-                <a asp-action="AllSupervisors" class="btn btn-secondary btn-sm">View Supervisors</a>
+                <a asp-controller="Specializations" asp-action="Index" class="btn btn-secondary btn-sm">Управление на Специалности</a>
             </div>
         </div>
     </div>

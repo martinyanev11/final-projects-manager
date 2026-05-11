@@ -1,0 +1,43 @@
+@model IEnumerable<FinalProjectManager.Data.Models.Topic>
+@{
+    ViewData["Title"] = "Дипломни работи";
+}
+
+<h2 class="mb-4">Всички Дипломни Работи</h2>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Заглавие</th>
+                    <th>Описание</th>
+                    <th>Ученик</th>
+                    <th class="text-end">Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var topic in Model)
+                {
+                    <tr>
+                        <td><strong>@topic.Title</strong></td>
+                        <td>@(topic.Description?.Length > 100 ? topic.Description.Substring(0, 100) + "..." : topic.Description)</td>
+                        <td>
+                            @if (topic.AssignedStudent != null)
+                            {
+                                <span class="badge bg-primary">@topic.AssignedStudent.FullName</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted small">Не е разпределена</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <a asp-controller="Topics" asp-action="Details" asp-route-id="@topic.Id" class="btn btn-sm btn-outline-info">Детайли</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

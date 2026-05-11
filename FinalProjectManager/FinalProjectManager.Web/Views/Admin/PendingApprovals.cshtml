@@ -1,50 +1,54 @@
 @model IEnumerable<FinalProjectManager.Data.Models.ApplicationUser>
 @{
-    ViewData["Title"] = "Pending Supervisor Approvals";
+    ViewData["Title"] = "Чакащи одобрение";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Pending Supervisor Approvals</h2>
-    <a asp-action="AllSupervisors" class="btn btn-outline-secondary btn-sm">All Supervisors</a>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Чакащи одобрение</h2>
+    <a asp-action="Users" class="btn btn-outline-secondary btn-sm">Всички потребители</a>
 </div>
 
 @if (!Model.Any())
 {
-    <div class="alert alert-success">No pending approvals.</div>
+    <div class="alert alert-success">Няма чакащи регистрации за одобрение.</div>
 }
 else
 {
-    <table class="table table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Registered</th>
-                <th class="text-end">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in Model)
-            {
-                <tr>
-                    <td>@user.FullName</td>
-                    <td>@user.Email</td>
-                    <td>—</td>
-                    <td class="text-end">
-                        <form asp-action="Approve" method="post" class="d-inline">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="userId" value="@user.Id" />
-                            <button type="submit" class="btn btn-sm btn-success">Approve</button>
-                        </form>
-                        <form asp-action="Reject" method="post" class="d-inline ms-1">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="userId" value="@user.Id" />
-                            <button type="submit" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Reject and delete this registration?')">Reject</button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Пълно име</th>
+                        <th>Имейл</th>
+                        <th>Клас</th>
+                        <th class="text-end">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@user.FullName</td>
+                            <td>@user.Email</td>
+                            <td>@(user.ClassDivision ?? "—")</td>
+                            <td class="text-end">
+                                <form asp-action="Approve" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="userId" value="@user.Id" />
+                                    <button type="submit" class="btn btn-sm btn-success">Одобри</button>
+                                </form>
+                                <form asp-action="Reject" method="post" class="d-inline ms-1">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="userId" value="@user.Id" />
+                                    <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Отхвърляне и изтриване на тази регистрация?')">Откажи</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }
