@@ -50,6 +50,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Email"));
 
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IAssignmentService, AssignmentService>();
 builder.Services.AddScoped<ITopicService, TopicService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ISupervisorService, SupervisorService>();

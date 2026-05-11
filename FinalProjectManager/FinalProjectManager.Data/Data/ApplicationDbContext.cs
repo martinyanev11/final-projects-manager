@@ -21,5 +21,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         base.OnModelCreating(builder);
 
         builder.Entity<ApplicationUser>().ToTable("Users");
+
+        builder.Entity<Student>()
+            .HasOne(s => s.Topic)
+            .WithOne(t => t.AssignedStudent)
+            .HasForeignKey<Student>(s => s.TopicId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }
