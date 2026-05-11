@@ -17,7 +17,7 @@ public class TopicService : ITopicService
 
     public async Task<IEnumerable<Topic>> GetAllAsync(string? search = null)
     {
-        var query = _context.Topics.AsQueryable();
+        var query = _context.Topics.Include(t => t.Specialisation).AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(search))
             query = query.Where(t => t.Title.Contains(search) || (t.Description != null && t.Description.Contains(search)));
@@ -26,7 +26,7 @@ public class TopicService : ITopicService
     }
 
     public async Task<Topic?> GetByIdAsync(int id)
-        => await _context.Topics.FindAsync(id);
+        => await _context.Topics.Include(t => t.Specialisation).FirstOrDefaultAsync(t => t.Id == id);
 
     public async Task CreateAsync(Topic topic)
     {

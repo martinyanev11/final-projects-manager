@@ -14,6 +14,9 @@
     <dt class="col-sm-3">Title</dt>
     <dd class="col-sm-9">@Model.Title</dd>
 
+    <dt class="col-sm-3">Specialisation</dt>
+    <dd class="col-sm-9">@Model.Specialisation?.Name</dd>
+
     <dt class="col-sm-3">Description</dt>
     <dd class="col-sm-9">@(Model.Description ?? "—")</dd>
 </dl>

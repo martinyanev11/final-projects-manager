@@ -33,6 +33,7 @@ else
             <tr>
                 <th>#</th>
                 <th>Title</th>
+                <th>Specialisation</th>
                 <th>Description</th>
                 <th class="text-end">Actions</th>
             </tr>
@@ -43,7 +44,8 @@ else
                 <tr>
                     <td>@topic.Id</td>
                     <td>@topic.Title</td>
-                    <td>@(topic.Description?.Length > 80 ? topic.Description[..80] + "…" : topic.Description)</td>
+                    <td>@topic.Specialisation?.Name</td>
+                    <td>@(topic.Description?.Length > 60 ? topic.Description[..60] + "…" : topic.Description)</td>
                     <td class="text-end">
                         <a asp-action="Details" asp-route-id="@topic.Id" class="btn btn-sm btn-outline-info">Details</a>
                         <a asp-action="Edit" asp-route-id="@topic.Id" class="btn btn-sm btn-outline-warning">Edit</a>

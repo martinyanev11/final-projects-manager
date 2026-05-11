@@ -24,6 +24,14 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
+            <div class="mb-3">
+                <label asp-for="SpecialisationId" class="form-label">Specialisation</label>
+                <select asp-for="SpecialisationId" asp-items="ViewBag.Specialisations" class="form-select">
+                    <option value="">— Select specialisation —</option>
+                </select>
+                <span asp-validation-for="SpecialisationId" class="text-danger"></span>
+            </div>
+
             <button type="submit" class="btn btn-warning">Save</button>
             <a asp-action="Index" class="btn btn-secondary ms-1">Cancel</a>
         </form>
