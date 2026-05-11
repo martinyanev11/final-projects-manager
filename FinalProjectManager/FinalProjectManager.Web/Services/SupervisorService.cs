@@ -43,11 +43,16 @@ public class SupervisorService : ISupervisorService
     public async Task DeleteAsync(int id)
     {
         var supervisor = await _context.Supervisors.FindAsync(id);
-        if (supervisor != null)
-        {
-            _context.Supervisors.Remove(supervisor);
-            await _context.SaveChangesAsync();
-        }
+        if (supervisor == null) return;
+
+        var supervised = await _context.Students.Where(s => s.SupervisorId == id).ToListAsync();
+        foreach (var s in supervised) s.SupervisorId = null;
+
+        var reviewed = await _context.Students.Where(s => s.ReviewerId == id).ToListAsync();
+        foreach (var s in reviewed) s.ReviewerId = null;
+
+        _context.Supervisors.Remove(supervisor);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<bool> ExistsAsync(int id)

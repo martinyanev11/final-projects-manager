@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProjectManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260511102823_AddSupervisorAndReviewerToStudent")]
+    [Migration("20260511104750_AddSupervisorAndReviewerToStudent")]
     partial class AddSupervisorAndReviewerToStudent
     {
         /// <inheritdoc />
@@ -357,8 +357,7 @@ namespace FinalProjectManager.Data.Migrations
                 {
                     b.HasOne("FinalProjectManager.Data.Models.Supervisor", "Reviewer")
                         .WithMany("ReviewedStudents")
-                        .HasForeignKey("ReviewerId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("ReviewerId");
 
                     b.HasOne("FinalProjectManager.Data.Models.Specialisation", "Specialisation")
                         .WithMany("Students")
@@ -368,8 +367,7 @@ namespace FinalProjectManager.Data.Migrations
 
                     b.HasOne("FinalProjectManager.Data.Models.Supervisor", "Supervisor")
                         .WithMany("SupervisedStudents")
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("SupervisorId");
 
                     b.HasOne("FinalProjectManager.Data.Models.Topic", "Topic")
                         .WithOne("AssignedStudent")
