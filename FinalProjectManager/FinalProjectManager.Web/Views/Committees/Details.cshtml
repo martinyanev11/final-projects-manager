@@ -1,0 +1,100 @@
+@model FinalProjectManager.Data.Models.DefenseCommittee
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>@Model.Name</h2>
+    <a asp-action="Index" class="btn btn-secondary">Назад към списъка</a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="row g-4">
+    <div class="col-md-5">
+        <h5>Членове на комисията</h5>
+        <table class="table table-sm table-bordered">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Учител</th>
+                    <th>Роля</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var member in Model.Members)
+                {
+                    <tr>
+                        <td>@member.Supervisor.FullName</td>
+                        <td>
+                            @if (member.IsChair)
+                            {
+                                <span class="badge bg-warning text-dark">Председател</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted small">Член</span>
+                            }
+                        </td>
+                        <td>
+                            @if (!member.IsChair)
+                            {
+                                <form asp-action="SetChair" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="committeeId" value="@Model.Id" />
+                                    <input type="hidden" name="supervisorId" value="@member.SupervisorId" />
+                                    <button type="submit" class="btn btn-sm btn-outline-warning">Задай като председател</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-7">
+        <h5>Ученици, защитаващи пред тази комисия</h5>
+        @if (!Model.Students.Any())
+        {
+            <div class="alert alert-info">Няма ученици, разпределени към тази комисия.</div>
+        }
+        else
+        {
+            <table class="table table-sm table-bordered">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Ученик</th>
+                        <th>Тема</th>
+                        <th>Ръководител</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model.Students.OrderBy(s => s.FullName))
+                    {
+                        <tr>
+                            <td>@student.FullName</td>
+                            <td>
+                                @if (student.Topic != null)
+                                {
+                                    <span class="badge bg-success">@student.Topic.Title</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Без тема</span>
+                                }
+                            </td>
+                            <td>@student.Supervisor?.FullName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
