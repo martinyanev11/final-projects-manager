@@ -72,7 +72,7 @@ public class SpecialisationsController : Controller
     {
         if (await _specialisationService.HasStudentsAsync(id))
         {
-            TempData["Error"] = "Cannot delete a specialisation that still has students assigned to it.";
+            TempData["Error"] = "Не може да се изтрие специализация с назначени ученици.";
             return RedirectToAction(nameof(Index));
         }
         await _specialisationService.DeleteAsync(id);

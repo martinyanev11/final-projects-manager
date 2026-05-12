@@ -51,6 +51,11 @@ public class StudentsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Student student)
     {
+        ModelState.Remove(nameof(Student.Specialisation));
+        ModelState.Remove(nameof(Student.Topic));
+        ModelState.Remove(nameof(Student.Supervisor));
+        ModelState.Remove(nameof(Student.Reviewer));
+        ModelState.Remove(nameof(Student.Committee));
         if (!ModelState.IsValid)
         {
             await PopulateDropdownsAsync(student.SpecialisationId, student.ClassName);
@@ -73,6 +78,11 @@ public class StudentsController : Controller
     public async Task<IActionResult> Edit(int id, Student student)
     {
         if (id != student.Id) return BadRequest();
+        ModelState.Remove(nameof(Student.Specialisation));
+        ModelState.Remove(nameof(Student.Topic));
+        ModelState.Remove(nameof(Student.Supervisor));
+        ModelState.Remove(nameof(Student.Reviewer));
+        ModelState.Remove(nameof(Student.Committee));
         if (!ModelState.IsValid)
         {
             await PopulateDropdownsAsync(student.SpecialisationId, student.ClassName);

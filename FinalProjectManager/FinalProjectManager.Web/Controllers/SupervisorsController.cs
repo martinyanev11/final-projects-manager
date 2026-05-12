@@ -44,6 +44,9 @@ public class SupervisorsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Supervisor supervisor)
     {
+        ModelState.Remove(nameof(Supervisor.Specialisation));
+        ModelState.Remove(nameof(Supervisor.SupervisedStudents));
+        ModelState.Remove(nameof(Supervisor.ReviewedStudents));
         if (!ModelState.IsValid)
         {
             await PopulateSpecialisationsAsync(supervisor.SpecialisationId);
@@ -66,6 +69,9 @@ public class SupervisorsController : Controller
     public async Task<IActionResult> Edit(int id, Supervisor supervisor)
     {
         if (id != supervisor.Id) return BadRequest();
+        ModelState.Remove(nameof(Supervisor.Specialisation));
+        ModelState.Remove(nameof(Supervisor.SupervisedStudents));
+        ModelState.Remove(nameof(Supervisor.ReviewedStudents));
         if (!ModelState.IsValid)
         {
             await PopulateSpecialisationsAsync(supervisor.SpecialisationId);

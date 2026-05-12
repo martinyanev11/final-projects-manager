@@ -34,7 +34,7 @@ public class CommitteesController : Controller
         try
         {
             await _committeeService.GenerateAsync(vm.CommitteeCount, vm.SupervisorsPerCommittee);
-            TempData["Success"] = $"Successfully generated {vm.CommitteeCount} committee(s).";
+            TempData["Success"] = $"Успешно генерирани {vm.CommitteeCount} комисии.";
         }
         catch (InvalidOperationException ex)
         {
@@ -56,7 +56,7 @@ public class CommitteesController : Controller
     public async Task<IActionResult> SetChair(int committeeId, int supervisorId)
     {
         await _committeeService.SetChairAsync(committeeId, supervisorId);
-        TempData["Success"] = "Chair updated.";
+        TempData["Success"] = "Председателят е актуализиран.";
         return RedirectToAction(nameof(Details), new { id = committeeId });
     }
 
@@ -65,7 +65,7 @@ public class CommitteesController : Controller
     public async Task<IActionResult> ClearAll()
     {
         await _committeeService.ClearAllAsync();
-        TempData["Success"] = "All committees cleared.";
+        TempData["Success"] = "Всички комисии са изтрити.";
         return RedirectToAction(nameof(Index));
     }
 }

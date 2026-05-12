@@ -44,6 +44,8 @@ public class TopicsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Topic topic)
     {
+        ModelState.Remove(nameof(Topic.Specialisation));
+        ModelState.Remove(nameof(Topic.AssignedStudent));
         if (!ModelState.IsValid)
         {
             await PopulateSpecialisationsAsync(topic.SpecialisationId);
@@ -66,6 +68,8 @@ public class TopicsController : Controller
     public async Task<IActionResult> Edit(int id, Topic topic)
     {
         if (id != topic.Id) return BadRequest();
+        ModelState.Remove(nameof(Topic.Specialisation));
+        ModelState.Remove(nameof(Topic.AssignedStudent));
         if (!ModelState.IsValid)
         {
             await PopulateSpecialisationsAsync(topic.SpecialisationId);
