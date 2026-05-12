@@ -1,9 +1,9 @@
 @model FinalProjectManager.Web.ViewModels.TopicAssignmentViewModel
 @{
-    ViewData["Title"] = "Change Topic Assignment";
+    ViewData["Title"] = "Промяна на тема";
 }
 
-<h2>Change Topic Assignment</h2>
+<h2>Промяна на тема</h2>
 <hr />
 
 <div class="row">
@@ -14,20 +14,20 @@
             <input type="hidden" asp-for="StudentId" />
 
             <div class="mb-3">
-                <label class="form-label fw-semibold">Student</label>
+                <label class="form-label fw-semibold">Ученик</label>
                 <p class="form-control-plaintext">@Model.StudentName</p>
             </div>
 
             <div class="mb-4">
-                <label asp-for="TopicId" class="form-label">Assigned Topic</label>
+                <label asp-for="TopicId" class="form-label">Присвоена тема</label>
                 <select asp-for="TopicId" asp-items="Model.AvailableTopics" class="form-select">
-                    <option value="">— No topic —</option>
+                    <option value="">— Без тема —</option>
                 </select>
                 <span asp-validation-for="TopicId" class="text-danger small"></span>
             </div>
 
-            <button type="submit" class="btn btn-warning">Save</button>
-            <a asp-action="Index" class="btn btn-secondary ms-1">Cancel</a>
+            <button type="submit" class="btn btn-warning">Запази</button>
+            <a asp-action="Index" class="btn btn-secondary ms-1">Отказ</a>
         </form>
     </div>
 </div>

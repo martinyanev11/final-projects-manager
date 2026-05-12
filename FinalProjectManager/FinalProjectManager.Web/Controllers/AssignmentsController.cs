@@ -32,8 +32,8 @@ public class AssignmentsController : Controller
         {
             var count = await _assignmentService.AutoAssignTopicsAsync();
             TempData["Success"] = count == 0
-                ? "All students already have a topic assigned."
-                : $"Successfully assigned topics to {count} student(s).";
+                ? "Всички ученици вече имат назначена тема."
+                : $"Успешно назначени теми на {count} ученик/ученика.";
         }
         catch (InvalidOperationException ex)
         {
@@ -51,8 +51,8 @@ public class AssignmentsController : Controller
         {
             var count = await _assignmentService.AutoAssignSupervisorsAsync();
             TempData["Success"] = count == 0
-                ? "All students already have a supervisor assigned."
-                : $"Successfully assigned supervisors to {count} student(s).";
+                ? "Всички ученици вече имат назначен ръководител."
+                : $"Успешно назначени ръководители на {count} ученик/ученика.";
         }
         catch (InvalidOperationException ex)
         {
@@ -70,8 +70,8 @@ public class AssignmentsController : Controller
         {
             var count = await _assignmentService.AutoAssignReviewersAsync();
             TempData["Success"] = count == 0
-                ? "All students already have a reviewer assigned."
-                : $"Successfully assigned reviewers to {count} student(s).";
+                ? "Всички ученици вече имат назначен рецензент."
+                : $"Успешно назначени рецензенти на {count} ученик/ученика.";
         }
         catch (InvalidOperationException ex)
         {
@@ -81,7 +81,6 @@ public class AssignmentsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    // Task 9 — manual override
     public async Task<IActionResult> EditTopic(int studentId)
     {
         var topics = await _assignmentService.GetAvailableTopicsForStudentAsync(studentId);
@@ -108,7 +107,7 @@ public class AssignmentsController : Controller
         try
         {
             await _assignmentService.AssignTopicAsync(vm.StudentId, vm.TopicId);
-            TempData["Success"] = "Topic assignment updated.";
+            TempData["Success"] = "Темата е актуализирана успешно.";
             return RedirectToAction(nameof(Index));
         }
         catch (InvalidOperationException ex)
