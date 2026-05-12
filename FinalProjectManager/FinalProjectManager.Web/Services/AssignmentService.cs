@@ -194,23 +194,28 @@ public class AssignmentService : IAssignmentService
             var specialisationName = groupStudents[0].Specialisation.Name;
 
             var supervisors = await _context.Supervisors
+                .Include(sv => sv.ReviewedStudents)
                 .Where(sv => sv.SpecialisationId == group.Key)
                 .ToListAsync();
+
+            var reviewerCounts = supervisors.ToDictionary(sv => sv.Id, sv => sv.ReviewedStudents.Count);
 
             foreach (var student in groupStudents)
             {
                 var eligible = supervisors
-                    .Where(sv => sv.Id != student.SupervisorId)
+                    .Where(sv => sv.Id != student.SupervisorId && reviewerCounts[sv.Id] < 4)
                     .OrderBy(_ => Guid.NewGuid())
                     .ToList();
 
                 if (eligible.Count == 0)
                     throw new InvalidOperationException(
                         $"Няма подходящ рецензент за ученик \"{student.FullName}\" " +
-                        $"в специализация \"{specialisationName}\": необходим е поне един друг учител.");
+                        $"в специализация \"{specialisationName}\": всички учители са достигнали лимита от 4 ученика или са ръководители на този ученик.");
 
-                student.ReviewerId = eligible[0].Id;
-                assignedReviewerByStudent[student.Id] = eligible[0];
+                var reviewer = eligible[0];
+                student.ReviewerId = reviewer.Id;
+                reviewerCounts[reviewer.Id]++;
+                assignedReviewerByStudent[student.Id] = reviewer;
             }
         }
 

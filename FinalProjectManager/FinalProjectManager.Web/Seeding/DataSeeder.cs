@@ -50,32 +50,26 @@ public static class DataSeeder
         var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
         var context = services.GetRequiredService<ApplicationDbContext>();
 
-        // Ensure default specialisations exist
-        if (!await context.Specialisations.AnyAsync())
+        // Ensure "Програмиране" specialisation exists
+        var spec = await context.Specialisations.FirstOrDefaultAsync(s => s.Name == "Програмиране");
+        if (spec == null)
         {
-            context.Specialisations.AddRange(
-                new Specialisation { Name = "Програмиране" },
-                new Specialisation { Name = "Мрежи" },
-                new Specialisation { Name = "Бизнес" },
-                new Specialisation { Name = "Графичен дизайн" }
-            );
+            spec = new Specialisation { Name = "Програмиране" };
+            context.Specialisations.Add(spec);
             await context.SaveChangesAsync();
         }
 
-        var specialisations = await context.Specialisations.ToListAsync();
-        string[] classNames = ["А", "Б", "В", "Г"];
-
-        // 80 test students
-        for (int i = 1; i <= 80; i++)
+        // 35 students in Програмиране
+        for (int i = 1; i <= 35; i++)
         {
-            var email = $"testuchenik{i}@buditel.bg";
+            var email = $"student{i}@buditel.bg";
             if (await userManager.FindByEmailAsync(email) != null) continue;
 
             var user = new ApplicationUser
             {
                 UserName = email,
                 Email = email,
-                FullName = $"Тест Ученик {i}",
+                FullName = $"Ученик {i}",
                 IsApproved = true,
                 EmailConfirmed = true
             };
@@ -86,47 +80,47 @@ public static class DataSeeder
                 await userManager.AddToRoleAsync(user, AppRoles.Student);
                 context.Students.Add(new Student
                 {
-                    FullName = $"Тест Ученик {i}",
+                    FullName = $"Ученик {i}",
                     Email = email,
-                    SpecialisationId = specialisations[(i - 1) % specialisations.Count].Id,
-                    ClassName = classNames[(i - 1) % classNames.Length]
+                    SpecialisationId = spec.Id,
+                    ClassName = "А"
                 });
             }
         }
         await context.SaveChangesAsync();
 
-        // 20 pending teachers (IsApproved = false)
-        for (int i = 1; i <= 20; i++)
+        // 16 approved teachers (first 5 eligible to lead committee)
+        for (int i = 1; i <= 16; i++)
         {
-            var email = $"testuchitel{i}@buditel.bg";
+            var email = $"teacher{i}@buditel.bg";
             if (await userManager.FindByEmailAsync(email) != null) continue;
 
+            var canLead = i <= 5;
             var user = new ApplicationUser
             {
                 UserName = email,
                 Email = email,
-                FullName = $"Тест Учител {i}",
-                IsApproved = false,
-                EmailConfirmed = true
+                FullName = $"Учител {i}",
+                IsApproved = true,
+                EmailConfirmed = true,
+                CanLeadCommittee = canLead
             };
 
             var result = await userManager.CreateAsync(user, TeacherPassword);
             if (result.Succeeded)
-                await userManager.AddToRoleAsync(user, AppRoles.Supervisor);
-        }
-
-        // 100 test topics (25 per specialisation)
-        var existingTitles = (await context.Topics.Select(t => t.Title).ToListAsync()).ToHashSet();
-        for (int i = 1; i <= 100; i++)
-        {
-            var title = $"Тест Тема {i}";
-            if (existingTitles.Contains(title)) continue;
-            context.Topics.Add(new Topic
             {
-                Title = title,
-                Description = $"Описание на тест тема {i}.",
-                SpecialisationId = specialisations[(i - 1) % specialisations.Count].Id
-            });
+                await userManager.AddToRoleAsync(user, AppRoles.Supervisor);
+
+                if (!await context.Supervisors.AnyAsync(sv => sv.Email == email))
+                {
+                    context.Supervisors.Add(new Supervisor
+                    {
+                        FullName = $"Учител {i}",
+                        Email = email,
+                        SpecialisationId = spec.Id
+                    });
+                }
+            }
         }
         await context.SaveChangesAsync();
     }
