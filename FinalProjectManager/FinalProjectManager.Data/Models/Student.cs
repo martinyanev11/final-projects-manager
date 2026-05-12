@@ -30,4 +30,7 @@ public class Student
 
     public int? ReviewerId { get; set; }
     public Supervisor? Reviewer { get; set; }
+
+    public int? CommitteeId { get; set; }
+    public DefenseCommittee? Committee { get; set; }
 }
