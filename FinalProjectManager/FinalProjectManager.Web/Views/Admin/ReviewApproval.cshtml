@@ -1,0 +1,61 @@
+@model FinalProjectManager.Data.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Преглед на заявка";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0">Заявка за регистрация на учител</h5>
+            </div>
+            <div class="card-body p-4">
+                <dl class="row mb-4">
+                    <dt class="col-sm-4">Пълно име</dt>
+                    <dd class="col-sm-8 fw-semibold">@Model.FullName</dd>
+
+                    <dt class="col-sm-4">Имейл</dt>
+                    <dd class="col-sm-8">@Model.Email</dd>
+
+                    <dt class="col-sm-4">Статус</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge bg-warning text-dark">Чакащ одобрение</span>
+                    </dd>
+                </dl>
+
+                <hr />
+
+                <form asp-action="Approve" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="userId" value="@Model.Id" />
+
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" name="canLeadCommittee"
+                               id="canLeadCommittee" value="true" />
+                        <label class="form-check-label" for="canLeadCommittee">
+                            <strong>Може да ръководи комисия за защита</strong>
+                            <div class="text-muted small">Отбележете, ако учителят може да бъде председател на комисия.</div>
+                        </label>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-success flex-grow-1">✔ Одобри</button>
+                    </div>
+                </form>
+
+                <form asp-action="Reject" method="post" class="mt-2">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="userId" value="@Model.Id" />
+                    <button type="submit" class="btn btn-danger w-100"
+                            onclick="return confirm('Сигурни ли сте? Акаунтът ще бъде изтрит.')">
+                        ✘ Откажи и изтрий
+                    </button>
+                </form>
+            </div>
+
+            <div class="card-footer text-end">
+                <a asp-action="PendingApprovals" class="btn btn-outline-secondary btn-sm">← Назад към списъка</a>
+            </div>
+        </div>
+    </div>
+</div>

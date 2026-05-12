@@ -1,25 +1,26 @@
 @model IEnumerable<FinalProjectManager.Data.Models.ApplicationUser>
 @{
-    ViewData["Title"] = "All Supervisors";
+    ViewData["Title"] = "Всички учители";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>All Supervisors</h2>
-    <a asp-action="PendingApprovals" class="btn btn-outline-warning btn-sm">Pending Approvals</a>
+    <h2>Всички учители</h2>
+    <a asp-action="PendingApprovals" class="btn btn-outline-warning btn-sm">Чакащи одобрения</a>
 </div>
 
 @if (!Model.Any())
 {
-    <div class="alert alert-info">No supervisors registered yet.</div>
+    <div class="alert alert-info">Все още няма регистрирани учители.</div>
 }
 else
 {
     <table class="table table-striped table-hover">
         <thead class="table-dark">
             <tr>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Status</th>
+                <th>Пълно иME</th>
+                <th>Имейл</th>
+                <th>Статус</th>
+                <th>Ръководи комисия</th>
             </tr>
         </thead>
         <tbody>
@@ -31,12 +32,26 @@ else
                     <td>
                         @if (user.IsApproved)
                         {
-                            <span class="badge bg-success">Approved</span>
+                            <span class="badge bg-success">Одобрен</span>
                         }
                         else
                         {
-                            <span class="badge bg-warning text-dark">Pending</span>
+                            <span class="badge bg-warning text-dark">Чакащ</span>
                         }
+                    </td>
+                    <td>
+                        <form asp-action="ToggleCommitteeEligibility" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            @if (user.CanLeadCommittee)
+                            {
+                                <button type="submit" class="btn btn-sm btn-primary">Да</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-sm btn-outline-secondary">Не</button>
+                            }
+                        </form>
                     </td>
                 </tr>
             }
