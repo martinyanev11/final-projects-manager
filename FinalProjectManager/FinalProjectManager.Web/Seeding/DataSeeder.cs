@@ -116,18 +116,18 @@ public static class DataSeeder
         }
 
         // 100 test topics (25 per specialisation)
-        if (!await context.Topics.AnyAsync())
+        var existingTitles = (await context.Topics.Select(t => t.Title).ToListAsync()).ToHashSet();
+        for (int i = 1; i <= 100; i++)
         {
-            for (int i = 1; i <= 100; i++)
+            var title = $"Тест Тема {i}";
+            if (existingTitles.Contains(title)) continue;
+            context.Topics.Add(new Topic
             {
-                context.Topics.Add(new Topic
-                {
-                    Title = $"Тест Тема {i}",
-                    Description = $"Описание на тест тема {i}.",
-                    SpecialisationId = specialisations[(i - 1) % specialisations.Count].Id
-                });
-            }
-            await context.SaveChangesAsync();
+                Title = title,
+                Description = $"Описание на тест тема {i}.",
+                SpecialisationId = specialisations[(i - 1) % specialisations.Count].Id
+            });
         }
+        await context.SaveChangesAsync();
     }
 }
