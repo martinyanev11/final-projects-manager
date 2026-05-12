@@ -14,16 +14,22 @@ public class SupervisorRegistrationController : Controller
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IEmailService _emailService;
+    private readonly INotificationService _notificationService;
     private readonly EmailSettings _emailSettings;
+    private readonly IConfiguration _configuration;
 
     public SupervisorRegistrationController(
         UserManager<ApplicationUser> userManager,
         IEmailService emailService,
-        IOptions<EmailSettings> emailSettings)
+        INotificationService notificationService,
+        IOptions<EmailSettings> emailSettings,
+        IConfiguration configuration)
     {
         _userManager = userManager;
         _emailService = emailService;
+        _notificationService = notificationService;
         _emailSettings = emailSettings.Value;
+        _configuration = configuration;
     }
 
     public IActionResult Register() => View();
@@ -32,6 +38,13 @@ public class SupervisorRegistrationController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Register(SupervisorRegisterViewModel model)
     {
+        // Email domain check
+        var allowedDomain = _configuration["AllowedEmailDomain"] ?? "buditel.bg";
+        if (!model.Email.EndsWith("@" + allowedDomain, StringComparison.OrdinalIgnoreCase))
+        {
+            ModelState.AddModelError(nameof(model.Email), $"Само имейл адреси с домейн @{allowedDomain} са разрешени.");
+        }
+
         if (!ModelState.IsValid) return View(model);
 
         var user = new ApplicationUser
@@ -54,16 +67,23 @@ public class SupervisorRegistrationController : Controller
 
         await _userManager.AddToRoleAsync(user, AppRoles.Supervisor);
 
+        // Notify admins in-app
+        await _notificationService.NotifyAdminsAsync(
+            "Нова заявка за регистрация на учител",
+            $"{model.FullName} ({model.Email}) иска да се регистрира като учител. Прегледайте заявката в панела за одобрения.",
+            "/Admin/PendingApprovals");
+
+        // Also send email notification
         await _emailService.SendEmailAsync(
             _emailSettings.AdminEmail,
-            "New Supervisor Registration Awaiting Approval",
+            "Нова заявка за регистрация на учител",
             $"""
-            <p>A new supervisor has registered and is awaiting approval:</p>
+            <p>Нов учител чака одобрение:</p>
             <ul>
-                <li><strong>Name:</strong> {model.FullName}</li>
-                <li><strong>Email:</strong> {model.Email}</li>
+                <li><strong>Име:</strong> {model.FullName}</li>
+                <li><strong>Имейл:</strong> {model.Email}</li>
             </ul>
-            <p>Please log in to the <a href="{Request.Scheme}://{Request.Host}/Admin/PendingApprovals">admin panel</a> to review the request.</p>
+            <p>Влезте в <a href="{Request.Scheme}://{Request.Host}/Admin/PendingApprovals">администраторския панел</a>, за да прегледате заявката.</p>
             """);
 
         return RedirectToAction(nameof(PendingApproval));
