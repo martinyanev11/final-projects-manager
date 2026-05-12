@@ -1,11 +1,11 @@
 @model IEnumerable<FinalProjectManager.Data.Models.Specialisation>
 @{
-    ViewData["Title"] = "Specialisations";
+    ViewData["Title"] = "Специализации";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Specialisations</h2>
-    <a asp-action="Create" class="btn btn-primary">+ Add Specialisation</a>
+    <h2>Специализации</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Добавяне на специализация</a>
 </div>
 
 @if (TempData["Error"] != null)
@@ -18,7 +18,7 @@
 
 @if (!Model.Any())
 {
-    <div class="alert alert-info">No specialisations found.</div>
+    <div class="alert alert-info">Не са намерени специализации.</div>
 }
 else
 {
@@ -26,22 +26,23 @@ else
         <thead class="table-dark">
             <tr>
                 <th>#</th>
-                <th>Name</th>
-                <th>Students</th>
-                <th class="text-end">Actions</th>
+                <th>Наименование</th>
+                <th>Ученици</th>
+                <th class="text-end">Действия</th>
             </tr>
         </thead>
         <tbody>
+            @{ var rowNum = 0; }
             @foreach (var s in Model)
             {
                 <tr>
-                    <td>@s.Id</td>
+                    <td>@(++rowNum)</td>
                     <td>@s.Name</td>
                     <td>@s.Students.Count</td>
                     <td class="text-end">
-                        <a asp-action="Details" asp-route-id="@s.Id" class="btn btn-sm btn-outline-info">Details</a>
-                        <a asp-action="Edit" asp-route-id="@s.Id" class="btn btn-sm btn-outline-warning">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@s.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                        <a asp-action="Details" asp-route-id="@s.Id" class="btn btn-sm btn-outline-info">Детайли</a>
+                        <a asp-action="Edit" asp-route-id="@s.Id" class="btn btn-sm btn-outline-warning">Редактиране</a>
+                        <a asp-action="Delete" asp-route-id="@s.Id" class="btn btn-sm btn-outline-danger">Изтриване</a>
                     </td>
                 </tr>
             }

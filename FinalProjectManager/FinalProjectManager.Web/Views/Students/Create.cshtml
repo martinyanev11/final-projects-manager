@@ -1,46 +1,46 @@
 @model FinalProjectManager.Data.Models.Student
 @{
-    ViewData["Title"] = "Create Student";
+    ViewData["Title"] = "Добавяне на ученик";
 }
 
-<h2>Create Student</h2>
+<h2>Добавяне на ученик</h2>
 <hr />
 
 <div class="row">
     <div class="col-md-5">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
             <div class="mb-3">
-                <label asp-for="FullName" class="form-label"></label>
+                <label asp-for="FullName" class="form-label">Пълно иME</label>
                 <input asp-for="FullName" class="form-control" />
                 <span asp-validation-for="FullName" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="Email" class="form-label"></label>
+                <label asp-for="Email" class="form-label">Имейл</label>
                 <input asp-for="Email" class="form-control" type="email" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="SpecialisationId" class="form-label">Specialisation</label>
+                <label asp-for="SpecialisationId" class="form-label">Специализация</label>
                 <select asp-for="SpecialisationId" asp-items="ViewBag.Specialisations" class="form-select">
-                    <option value="">— Select specialisation —</option>
+                    <option value="">— Изберете специализация —</option>
                 </select>
                 <span asp-validation-for="SpecialisationId" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="ClassName" class="form-label">Class</label>
+                <label asp-for="ClassName" class="form-label">Клас</label>
                 <select asp-for="ClassName" asp-items="ViewBag.ClassNames" class="form-select">
-                    <option value="">— Select class —</option>
+                    <option value="">— Изберете клас —</option>
                 </select>
                 <span asp-validation-for="ClassName" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-primary">Create</button>
-            <a asp-action="Index" class="btn btn-secondary ms-1">Cancel</a>
+            <button type="submit" class="btn btn-primary">Създай</button>
+            <a asp-action="Index" class="btn btn-secondary ms-1">Отказ</a>
         </form>
     </div>
 </div>

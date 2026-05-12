@@ -1,25 +1,25 @@
 @model FinalProjectManager.Data.Models.Specialisation
 @{
-    ViewData["Title"] = "Edit Specialisation";
+    ViewData["Title"] = "Редактиране на специализация";
 }
 
-<h2>Edit Specialisation</h2>
+<h2>Редактиране на специализация</h2>
 <hr />
 
 <div class="row">
     <div class="col-md-5">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
             <input type="hidden" asp-for="Id" />
 
             <div class="mb-3">
-                <label asp-for="Name" class="form-label"></label>
+                <label asp-for="Name" class="form-label">Наименование</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-warning">Save</button>
-            <a asp-action="Index" class="btn btn-secondary ms-1">Cancel</a>
+            <button type="submit" class="btn btn-warning">Запази</button>
+            <a asp-action="Index" class="btn btn-secondary ms-1">Отказ</a>
         </form>
     </div>
 </div>

@@ -1,30 +1,30 @@
 @model IEnumerable<FinalProjectManager.Data.Models.Topic>
 @{
-    ViewData["Title"] = "Topics";
+    ViewData["Title"] = "Теми";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Thesis Topics</h2>
-    <a asp-action="Create" class="btn btn-primary">+ Add Topic</a>
+    <h2>Дипломни теми</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Добавяне на тема</a>
 </div>
 
 <form method="get" class="row g-2 mb-4">
     <div class="col-auto flex-grow-1">
         <input type="text" name="search" value="@ViewData["Search"]"
-               class="form-control" placeholder="Search topics..." />
+               class="form-control" placeholder="Търсене на теми..." />
     </div>
     <div class="col-auto">
-        <button type="submit" class="btn btn-outline-secondary">Search</button>
+        <button type="submit" class="btn btn-outline-secondary">Търсене</button>
         @if (!string.IsNullOrEmpty(ViewData["Search"]?.ToString()))
         {
-            <a asp-action="Index" class="btn btn-outline-danger ms-1">Clear</a>
+            <a asp-action="Index" class="btn btn-outline-danger ms-1">Изчисти</a>
         }
     </div>
 </form>
 
 @if (!Model.Any())
 {
-    <div class="alert alert-info">No topics found.</div>
+    <div class="alert alert-info">Не са намерени теми.</div>
 }
 else
 {
@@ -32,24 +32,25 @@ else
         <thead class="table-dark">
             <tr>
                 <th>#</th>
-                <th>Title</th>
-                <th>Specialisation</th>
-                <th>Description</th>
-                <th class="text-end">Actions</th>
+                <th>Заглавие</th>
+                <th>Специализация</th>
+                <th>Описание</th>
+                <th class="text-end">Действия</th>
             </tr>
         </thead>
         <tbody>
+            @{ var rowNum = 0; }
             @foreach (var topic in Model)
             {
                 <tr>
-                    <td>@topic.Id</td>
+                    <td>@(++rowNum)</td>
                     <td>@topic.Title</td>
                     <td>@topic.Specialisation?.Name</td>
                     <td>@(topic.Description?.Length > 60 ? topic.Description[..60] + "…" : topic.Description)</td>
                     <td class="text-end">
-                        <a asp-action="Details" asp-route-id="@topic.Id" class="btn btn-sm btn-outline-info">Details</a>
-                        <a asp-action="Edit" asp-route-id="@topic.Id" class="btn btn-sm btn-outline-warning">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@topic.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                        <a asp-action="Details" asp-route-id="@topic.Id" class="btn btn-sm btn-outline-info">Детайли</a>
+                        <a asp-action="Edit" asp-route-id="@topic.Id" class="btn btn-sm btn-outline-warning">Редактиране</a>
+                        <a asp-action="Delete" asp-route-id="@topic.Id" class="btn btn-sm btn-outline-danger">Изтриване</a>
                     </td>
                 </tr>
             }

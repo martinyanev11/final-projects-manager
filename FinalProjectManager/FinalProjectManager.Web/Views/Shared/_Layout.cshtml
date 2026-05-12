@@ -1,9 +1,13 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<FinalProjectManager.Data.Models.ApplicationUser> UserManager
+@inject FinalProjectManager.Web.Services.Interfaces.INotificationService NotificationService
+
+<!DOCTYPE html>
+<html lang="bg">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Final Project Manager</title>
+    <title>@ViewData["Title"] - СофтУни Дипломни Работи</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
@@ -12,7 +16,7 @@
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom">
             <div class="container">
                 <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
-                    📋 FP Manager
+                    📋 СофтУни Дипломни Работи
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarNav">
@@ -21,30 +25,54 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
                         </li>
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-warning" href="#" role="button"
-                                   data-bs-toggle="dropdown">Admin</a>
+                                   data-bs-toggle="dropdown">Администратор</a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Dashboard</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Табло</a></li>
                                     <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item" asp-controller="Topics" asp-action="Index">Topics</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Students" asp-action="Index">Students</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Supervisors" asp-action="Index">Supervisors</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Topics" asp-action="Index">Теми</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Students" asp-action="Index">Ученици</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Supervisors" asp-action="Index">Учители</a></li>
                                     <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item" asp-controller="Assignments" asp-action="Index">Topic Assignments</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Assignments" asp-action="Index">Разпределения</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Committees" asp-action="Index">Комисии за защита</a></li>
                                     <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="PendingApprovals">Pending Approvals</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="AllSupervisors">All Supervisors</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="PendingApprovals">Чакащи одобрения</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="AllSupervisors">Всички учители</a></li>
                                     <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item" asp-controller="Specialisations" asp-action="Index">Specialisations</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Specialisations" asp-action="Index">Специализации</a></li>
                                 </ul>
                             </li>
                         }
                     </ul>
+
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        var _userId = UserManager.GetUserId(User);
+                        var _unread = _userId != null ? await NotificationService.GetUnreadCountAsync(_userId) : 0;
+                        <ul class="navbar-nav me-2">
+                            <li class="nav-item">
+                                <a class="nav-link position-relative text-light"
+                                   asp-controller="Notifications" asp-action="Index"
+                                   title="Входяща кутия">
+                                    🔔
+                                    @if (_unread > 0)
+                                    {
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                              style="font-size:0.6rem">
+                                            @_unread
+                                        </span>
+                                    }
+                                </a>
+                            </li>
+                        </ul>
+                    }
+
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -59,7 +87,7 @@
 
     <footer class="border-top mt-5 py-3 text-muted text-center small">
         <div class="container">
-            &copy; @DateTime.Now.Year — Final Project Manager
+            &copy; @DateTime.Now.Year — СофтУни Дипломни Работи
         </div>
     </footer>
 
