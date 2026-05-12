@@ -65,8 +65,8 @@ public static class DataSeeder
         var specialisations = await context.Specialisations.ToListAsync();
         string[] classNames = ["А", "Б", "В", "Г"];
 
-        // 20 test students
-        for (int i = 1; i <= 20; i++)
+        // 80 test students
+        for (int i = 1; i <= 80; i++)
         {
             var email = $"testuchenik{i}@buditel.bg";
             if (await userManager.FindByEmailAsync(email) != null) continue;
@@ -113,6 +113,21 @@ public static class DataSeeder
             var result = await userManager.CreateAsync(user, TeacherPassword);
             if (result.Succeeded)
                 await userManager.AddToRoleAsync(user, AppRoles.Supervisor);
+        }
+
+        // 100 test topics (25 per specialisation)
+        if (!await context.Topics.AnyAsync())
+        {
+            for (int i = 1; i <= 100; i++)
+            {
+                context.Topics.Add(new Topic
+                {
+                    Title = $"Тест Тема {i}",
+                    Description = $"Описание на тест тема {i}.",
+                    SpecialisationId = specialisations[(i - 1) % specialisations.Count].Id
+                });
+            }
+            await context.SaveChangesAsync();
         }
     }
 }
