@@ -1,44 +1,66 @@
 @model FinalProjectManager.Web.ViewModels.SupervisorRegisterViewModel
 @{
-    ViewData["Title"] = "Supervisor Registration";
+    ViewData["Title"] = "Регистрация на учител";
 }
 
-<div class="row justify-content-center">
-    <div class="col-md-5">
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title mb-1">Supervisor Registration</h3>
-                <p class="text-muted small mb-4">Your account will be reviewed by an administrator before you can access the system.</p>
+<div class="row g-0" style="min-height: 82vh;">
 
-                <form asp-action="Register">
-                    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+    <!-- Left green panel -->
+    <div class="col-md-5 d-none d-md-flex flex-column justify-content-center align-items-center text-white p-5"
+         style="background-color: #1a7a5e;">
+        <div class="text-center">
+            <div class="mb-4" style="font-size: 3rem;">👨‍🏫</div>
+            <h2 class="fw-bold mb-3">Регистрация на учител</h2>
+            <p class="opacity-75 mb-0">Вашият профил ще бъде прегледан от администратор преди да получите достъп до системата.</p>
+        </div>
+    </div>
 
-                    <div class="mb-3">
-                        <label asp-for="FullName" class="form-label"></label>
-                        <input asp-for="FullName" class="form-control" autofocus />
-                        <span asp-validation-for="FullName" class="text-danger small"></span>
-                    </div>
+    <!-- Right form panel -->
+    <div class="col-md-7 d-flex flex-column justify-content-center align-items-center bg-white p-5">
+        <div class="w-100" style="max-width: 400px;">
+            <h2 class="fw-bold mb-1">Регистрация</h2>
+            <p class="text-muted mb-4">Попълнете данните си за нов профил.</p>
 
-                    <div class="mb-3">
-                        <label asp-for="Email" class="form-label"></label>
-                        <input asp-for="Email" class="form-control" type="email" />
-                        <span asp-validation-for="Email" class="text-danger small"></span>
-                    </div>
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
 
-                    <div class="mb-3">
-                        <label asp-for="Password" class="form-label"></label>
-                        <input asp-for="Password" class="form-control" type="password" />
-                        <span asp-validation-for="Password" class="text-danger small"></span>
-                    </div>
+            <form asp-action="Register" method="post">
+                @Html.AntiForgeryToken()
 
-                    <div class="mb-4">
-                        <label asp-for="ConfirmPassword" class="form-label"></label>
-                        <input asp-for="ConfirmPassword" class="form-control" type="password" />
-                        <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
-                    </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="FullName" class="form-control" placeholder="Пълно име" autofocus />
+                    <label asp-for="FullName">Пълно име</label>
+                    <span asp-validation-for="FullName" class="text-danger small"></span>
+                </div>
 
-                    <button type="submit" class="btn btn-primary w-100">Register</button>
-                </form>
+                <div class="form-floating mb-3">
+                    <input asp-for="Email" class="form-control" type="email" placeholder="имейл" />
+                    <label asp-for="Email">Имейл</label>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Password" class="form-control" type="password" placeholder="парола" />
+                    <label asp-for="Password">Парола</label>
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <div class="form-floating mb-4">
+                    <input asp-for="ConfirmPassword" class="form-control" type="password" placeholder="потвърди паролата" />
+                    <label asp-for="ConfirmPassword">Потвърди паролата</label>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                </div>
+
+                <button type="submit" class="btn btn-lg w-100 text-white fw-semibold"
+                        style="background-color: #1a7a5e; border-color: #1a7a5e;">
+                    Регистрирай се
+                </button>
+            </form>
+
+            <hr class="my-3" />
+            <div class="text-center small">
+                <a asp-area="Identity" asp-page="/Account/Login" class="text-decoration-none" style="color: #1a7a5e;">
+                    Вече имате профил? Влезте тук
+                </a>
             </div>
         </div>
     </div>
