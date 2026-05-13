@@ -9,12 +9,12 @@ namespace FinalProjectManager.Web.Services;
 public class AssignmentService : IAssignmentService
 {
     private readonly ApplicationDbContext _context;
-    private readonly INotificationService _notificationService;
+    private readonly IEmailService _emailService;
 
-    public AssignmentService(ApplicationDbContext context, INotificationService notificationService)
+    public AssignmentService(ApplicationDbContext context, IEmailService emailService)
     {
         _context = context;
-        _notificationService = notificationService;
+        _emailService = emailService;
     }
 
     public async Task<IEnumerable<Student>> GetStudentsWithTopicsAsync() =>
@@ -77,7 +77,7 @@ public class AssignmentService : IAssignmentService
         foreach (var student in unassignedStudents)
         {
             if (assignedTopicsByStudent.TryGetValue(student.Id, out var topic))
-                await _notificationService.CreateForEmailAsync(
+                await _emailService.SendEmailAsync(
                     student.Email,
                     "Тема назначена",
                     $"Вашата дипломна тема е: {topic.Title}.");
@@ -105,7 +105,7 @@ public class AssignmentService : IAssignmentService
             if (alreadyTaken)
                 throw new InvalidOperationException("Тази тема вече е назначена на друг ученик.");
 
-            await _notificationService.CreateForEmailAsync(
+            await _emailService.SendEmailAsync(
                 student.Email,
                 "Тема актуализирана",
                 $"Вашата дипломна тема е променена на: {topic.Title}.");
@@ -162,12 +162,12 @@ public class AssignmentService : IAssignmentService
         {
             if (!assignedSupervisorByStudent.TryGetValue(student.Id, out var supervisor)) continue;
 
-            await _notificationService.CreateForEmailAsync(
+            await _emailService.SendEmailAsync(
                 student.Email,
                 "Ръководител назначен",
                 $"Вашият научен ръководител е: {supervisor.FullName}.");
 
-            await _notificationService.CreateForEmailAsync(
+            await _emailService.SendEmailAsync(
                 supervisor.Email,
                 "Нов ученик",
                 $"Назначен ви е ученик: {student.FullName}.");
@@ -225,12 +225,12 @@ public class AssignmentService : IAssignmentService
         {
             if (!assignedReviewerByStudent.TryGetValue(student.Id, out var reviewer)) continue;
 
-            await _notificationService.CreateForEmailAsync(
+            await _emailService.SendEmailAsync(
                 student.Email,
                 "Рецензент назначен",
                 $"Вашият рецензент е: {reviewer.FullName}.");
 
-            await _notificationService.CreateForEmailAsync(
+            await _emailService.SendEmailAsync(
                 reviewer.Email,
                 "Нов ученик за рецензия",
                 $"Назначен ви е ученик за рецензиране: {student.FullName}.");

@@ -95,15 +95,13 @@ public static class DataSeeder
             var email = $"teacher{i}@buditel.bg";
             if (await userManager.FindByEmailAsync(email) != null) continue;
 
-            var canLead = i <= 5;
             var user = new ApplicationUser
             {
                 UserName = email,
                 Email = email,
                 FullName = $"Учител {i}",
                 IsApproved = true,
-                EmailConfirmed = true,
-                CanLeadCommittee = canLead
+                EmailConfirmed = true
             };
 
             var result = await userManager.CreateAsync(user, TeacherPassword);
