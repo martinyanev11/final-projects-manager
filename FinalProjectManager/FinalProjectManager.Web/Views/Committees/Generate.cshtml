@@ -1,0 +1,48 @@
+@model FinalProjectManager.Web.ViewModels.GenerateCommitteesViewModel
+@{
+    ViewData["Title"] = "Генериране на комисии";
+}
+
+<h2>Генериране на комисии за защита</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <p class="text-muted small mb-3">
+                    Учениците ще бъдат разпределени равномерно между комисиите.
+                    Учители, чиито ученици са в дадена комисия, няма да бъдат включени в нея.
+                    Първият назначен учител става председател по подразбиране (може да промените в Детайли).
+                </p>
+
+                <form asp-action="Generate" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="CommitteeCount" class="form-label">Брой комисии</label>
+                        <input asp-for="CommitteeCount" class="form-control" type="number" min="1" max="20" />
+                        <span asp-validation-for="CommitteeCount" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="SupervisorsPerCommittee" class="form-label">Учители в комисия</label>
+                        <input asp-for="SupervisorsPerCommittee" class="form-control" type="number" min="1" max="10" />
+                        <span asp-validation-for="SupervisorsPerCommittee" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary"
+                            onclick="return confirm('Това ще замени съществуващите комисии. Продължете?')">
+                        Генерирай
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary ms-1">Отказ</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

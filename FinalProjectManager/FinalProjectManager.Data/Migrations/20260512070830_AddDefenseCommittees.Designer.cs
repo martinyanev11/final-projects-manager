@@ -4,16 +4,19 @@ using FinalProjectManager.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace FinalProjectManager.Web.Data.Migrations
+namespace FinalProjectManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260512070830_AddDefenseCommittees")]
+    partial class AddDefenseCommittees
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +32,6 @@ namespace FinalProjectManager.Web.Data.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<bool>("CanLeadCommittee")
-                        .HasColumnType("bit");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -138,42 +138,6 @@ namespace FinalProjectManager.Web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DefenseCommittees");
-                });
-
-            modelBuilder.Entity("FinalProjectManager.Data.Models.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Body")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Link")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RecipientUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipientUserId");
-
-                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("FinalProjectManager.Data.Models.Specialisation", b =>
@@ -454,17 +418,6 @@ namespace FinalProjectManager.Web.Data.Migrations
                     b.Navigation("Committee");
 
                     b.Navigation("Supervisor");
-                });
-
-            modelBuilder.Entity("FinalProjectManager.Data.Models.Notification", b =>
-                {
-                    b.HasOne("FinalProjectManager.Data.Models.ApplicationUser", "Recipient")
-                        .WithMany()
-                        .HasForeignKey("RecipientUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Recipient");
                 });
 
             modelBuilder.Entity("FinalProjectManager.Data.Models.Student", b =>
