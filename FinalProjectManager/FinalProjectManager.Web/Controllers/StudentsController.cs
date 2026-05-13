@@ -27,10 +27,19 @@ public class StudentsController : Controller
         _specialisationService = specialisationService;
     }
 
-    public async Task<IActionResult> Index(string? search)
+    public async Task<IActionResult> Index(string? search, int? specialisationId, string? className)
     {
         ViewData["Search"] = search;
-        var students = await _studentService.GetAllAsync(search);
+        ViewData["SelectedSpecialisation"] = specialisationId;
+        ViewData["SelectedClass"] = className;
+
+        var specialisations = await _specialisationService.GetAllAsync();
+        ViewBag.FilterSpecialisations = new SelectList(specialisations, "Id", "Name", specialisationId);
+        ViewBag.FilterClasses = new SelectList(
+            BulgarianClassLetters.Select(l => new { Value = l, Text = $"12{l}" }),
+            "Value", "Text", className);
+
+        var students = await _studentService.GetAllAsync(search, specialisationId, className);
         return View(students);
     }
 

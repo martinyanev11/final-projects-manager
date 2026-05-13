@@ -1,9 +1,9 @@
 @model FinalProjectManager.Data.Models.Supervisor
 @{
-    ViewData["Title"] = "Create Supervisor";
+    ViewData["Title"] = "Добави учител";
 }
 
-<h2>Create Supervisor</h2>
+<h2 class="fw-bold mb-1">Добави учител</h2>
 <hr />
 
 <div class="row">
@@ -12,27 +12,27 @@
             <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
             <div class="mb-3">
-                <label asp-for="FullName" class="form-label"></label>
+                <label asp-for="FullName" class="form-label">Пълно Име</label>
                 <input asp-for="FullName" class="form-control" />
                 <span asp-validation-for="FullName" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="Email" class="form-label"></label>
+                <label asp-for="Email" class="form-label">Имейл</label>
                 <input asp-for="Email" class="form-control" type="email" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="SpecialisationId" class="form-label">Specialisation</label>
+                <label asp-for="SpecialisationId" class="form-label">Специализация</label>
                 <select asp-for="SpecialisationId" asp-items="ViewBag.Specialisations" class="form-select">
-                    <option value="">— Select specialisation —</option>
+                    <option value="">— Изберете специализация —</option>
                 </select>
                 <span asp-validation-for="SpecialisationId" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-primary">Create</button>
-            <a asp-action="Index" class="btn btn-secondary ms-1">Cancel</a>
+            <button type="submit" class="btn text-white fw-semibold" style="background-color:#1565c0;">Създай</button>
+            <a asp-action="Index" class="btn btn-outline-secondary ms-1">Отказ</a>
         </form>
     </div>
 </div>

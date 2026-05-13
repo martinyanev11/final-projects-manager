@@ -1,54 +1,84 @@
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Начало";
 }
-
-<div class="text-center mb-5">
-    <h1 class="display-5 fw-bold">Final Project Manager</h1>
-    <p class="lead text-muted">Managing thesis projects, supervisors, and defence committees for SoftUni Buditel.</p>
-</div>
 
 @if (!User.Identity!.IsAuthenticated)
 {
-    <div class="row justify-content-center g-3">
-        <div class="col-md-4">
-            <div class="card text-center h-100">
-                <div class="card-body py-4">
-                    <h5 class="card-title">Student</h5>
-                    <p class="text-muted small">Access your thesis topic and supervisor information.</p>
-                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-primary btn-sm">Log in</a>
-                </div>
+    <div class="row g-0 min-vh-80" style="min-height: 82vh;">
+
+        <!-- Left panel -->
+        <div class="col-md-5 d-flex flex-column justify-content-center align-items-center text-white p-5"
+             style="background-color: #1565c0;">
+            <div class="text-center">
+                <img src="/images/buditel-logo.svg" alt="СофтУни Будител" class="mb-4" style="max-width:120px; filter:brightness(0) invert(1);" />
+                <h1 class="fw-bold fs-3 mb-3">Управление на дипломни работи</h1>
+                <p class="opacity-75 mb-0">Платформа за управление на теми, ръководители и комисии за защита — СофтУни Будител.</p>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card text-center h-100">
-                <div class="card-body py-4">
-                    <h5 class="card-title">Supervisor</h5>
-                    <p class="text-muted small">Register as a supervisor and await admin approval.</p>
-                    <a asp-controller="SupervisorRegistration" asp-action="Register" class="btn btn-outline-success btn-sm">Register as Supervisor</a>
+
+        <!-- Right panel -->
+        <div class="col-md-7 d-flex flex-column justify-content-center align-items-center bg-white p-5">
+            <div class="w-100" style="max-width: 400px;">
+                <h2 class="fw-bold mb-1">Добре дошли</h2>
+                <p class="text-muted mb-4">Влезте в профила си или се регистрирайте.</p>
+
+                <!-- Login -->
+                <a asp-area="Identity" asp-page="/Account/Login"
+                   class="btn btn-lg w-100 mb-3 text-white fw-semibold"
+                   style="background-color: #1565c0; border-color: #1565c0;">
+                    Вход в системата
+                </a>
+
+                <div class="d-flex align-items-center my-3">
+                    <hr class="flex-grow-1" />
+                    <span class="mx-3 text-muted small">или се регистрирайте като</span>
+                    <hr class="flex-grow-1" />
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-center h-100">
-                <div class="card-body py-4">
-                    <h5 class="card-title">Admin</h5>
-                    <p class="text-muted small">Manage topics, students, supervisors and approvals.</p>
-                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-warning btn-sm">Admin Login</a>
+
+                <!-- Role cards -->
+                <div class="row g-3">
+                    <div class="col-6">
+                        <a asp-area="Identity" asp-page="/Account/Register"
+                           class="card text-center text-decoration-none border-2 h-100 role-card"
+                           style="border-color: #1565c0 !important;">
+                            <div class="card-body py-3">
+                                <div class="fs-2 mb-2">🎓</div>
+                                <h6 class="fw-bold mb-1" style="color: #1565c0;">Ученик</h6>
+                                <p class="text-muted small mb-0">Достъп до тема и ръководител</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a asp-controller="SupervisorRegistration" asp-action="Register"
+                           class="card text-center text-decoration-none border-2 h-100 role-card"
+                           style="border-color: #1565c0 !important;">
+                            <div class="card-body py-3">
+                                <div class="fs-2 mb-2">👨‍🏫</div>
+                                <h6 class="fw-bold mb-1" style="color: #1565c0;">Учител</h6>
+                                <p class="text-muted small mb-0">Регистрация и одобрение от администратор</p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+        .role-card { transition: box-shadow .15s; }
+        .role-card:hover { box-shadow: 0 4px 16px rgba(21,101,192,.25); }
+    </style>
 }
 else if (User.IsInRole("Admin"))
 {
-    <div class="text-center">
-        <p>Welcome back, <strong>@User.Identity.Name</strong>.</p>
-        <a asp-controller="Admin" asp-action="Index" class="btn btn-warning">Go to Admin Dashboard</a>
+    <div class="text-center mt-5">
+        <h4>Добре дошли, <strong>@User.Identity!.Name</strong>.</h4>
+        <a asp-controller="Admin" asp-action="Index" class="btn btn-success mt-3">Към административния панел</a>
     </div>
 }
 else
 {
-    <div class="text-center">
-        <p>Welcome back, <strong>@User.Identity.Name</strong>.</p>
+    <div class="text-center mt-5">
+        <h4>Добре дошли, <strong>@User.Identity!.Name</strong>.</h4>
     </div>
 }

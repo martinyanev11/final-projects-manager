@@ -1,0 +1,61 @@
+@model IEnumerable<FinalProjectManager.Data.Models.Notification>
+@{
+    ViewData["Title"] = "Входяща кутия";
+    var unread = Model.Count(n => !n.IsRead);
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Входяща кутия @if (unread > 0) { <span class="badge bg-danger">@unread</span> }</h2>
+    @if (unread > 0)
+    {
+        <form asp-action="MarkAllRead" method="post">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-outline-secondary btn-sm">Маркирай всички като прочетени</button>
+        </form>
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Няма съобщения.</div>
+}
+else
+{
+    <div class="list-group">
+        @foreach (var notification in Model)
+        {
+            <div class="list-group-item @(notification.IsRead ? "" : "list-group-item-warning")">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1 @(notification.IsRead ? "text-muted fw-normal" : "fw-bold")">
+                            @notification.Title
+                        </h6>
+                        <p class="mb-1 small">@notification.Body</p>
+                        <div class="d-flex align-items-center gap-2 mt-1">
+                            <small class="text-muted">@notification.CreatedAt.ToString("dd.MM.yyyy HH:mm")</small>
+                            @if (!string.IsNullOrEmpty(notification.Link))
+                            {
+                                <a href="@notification.Link" class="btn btn-sm btn-outline-primary py-0">Прегледай →</a>
+                            }
+                        </div>
+                    </div>
+                    <div class="ms-3 flex-shrink-0 d-flex gap-1">
+                        @if (!notification.IsRead)
+                        {
+                            <form asp-action="MarkRead" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@notification.Id" />
+                                <button type="submit" class="btn btn-sm btn-outline-secondary">Прочетено</button>
+                            </form>
+                        }
+                        <form asp-action="Delete" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@notification.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Изтрий</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

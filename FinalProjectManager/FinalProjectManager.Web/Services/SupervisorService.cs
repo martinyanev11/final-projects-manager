@@ -15,12 +15,15 @@ public class SupervisorService : ISupervisorService
         _context = context;
     }
 
-    public async Task<IEnumerable<Supervisor>> GetAllAsync(string? search = null)
+    public async Task<IEnumerable<Supervisor>> GetAllAsync(string? search = null, int? specialisationId = null)
     {
         var query = _context.Supervisors.Include(s => s.Specialisation).AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(search))
             query = query.Where(s => s.FullName.Contains(search) || s.Email.Contains(search));
+
+        if (specialisationId.HasValue)
+            query = query.Where(s => s.SpecialisationId == specialisationId.Value);
 
         return await query.OrderBy(s => s.FullName).ToListAsync();
     }

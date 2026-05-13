@@ -1,0 +1,78 @@
+@model IEnumerable<FinalProjectManager.Data.Models.DefenseCommittee>
+@{
+    ViewData["Title"] = "Комисии за защита";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Комисии за защита</h2>
+    <div class="d-flex gap-2">
+        <a asp-action="Generate" class="btn btn-primary">Генериране на комисии</a>
+        @if (Model.Any())
+        {
+            <form asp-action="ClearAll" method="post"
+                  onsubmit="return confirm('Изчистване на всички комисии и нулиране на разпределенията?')">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-outline-danger">Изчисти всички</button>
+            </form>
+        }
+    </div>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Все още няма генерирани комисии. Кликнете „Генериране на комисии" за начало.</div>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Комисия</th>
+                <th>Ученици</th>
+                <th>Членове</th>
+                <th>Председател</th>
+                <th class="text-end">Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var committee in Model)
+            {
+                var chair = committee.Members.FirstOrDefault(m => m.IsChair);
+                <tr>
+                    <td>@committee.Name</td>
+                    <td>@committee.Students.Count</td>
+                    <td>@committee.Members.Count</td>
+                    <td>
+                        @if (chair != null)
+                        {
+                            <span class="badge bg-warning text-dark">@chair.Supervisor.FullName</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Не е зададен</span>
+                        }
+                    </td>
+                    <td class="text-end">
+                        <a asp-action="Details" asp-route-id="@committee.Id"
+                           class="btn btn-sm btn-outline-info">Детайли</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

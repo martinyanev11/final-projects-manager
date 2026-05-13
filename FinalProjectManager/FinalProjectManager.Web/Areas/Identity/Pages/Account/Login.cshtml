@@ -1,0 +1,78 @@
+@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Вход";
+    Layout = "/Views/Shared/_Layout.cshtml";
+    var hasGoogle = Model.ExternalLogins?.Any(p => p.Name == "Google") == true;
+}
+
+<div class="row g-0" style="min-height: 82vh;">
+
+    <div class="col-md-5 d-none d-md-flex flex-column justify-content-center align-items-center text-white p-5"
+         style="background-color: #1565c0;">
+        <div class="text-center">
+            <img src="/images/buditel-logo.svg" alt="СофтУни Будител" class="mb-4" style="max-width:120px; filter:brightness(0) invert(1);" />
+            <h2 class="fw-bold mb-3">Добре дошли обратно</h2>
+            <p class="opacity-75 mb-0">Влезте в своя профил, за да управлявате дипломната си работа.</p>
+        </div>
+    </div>
+
+    <div class="col-md-7 d-flex flex-column justify-content-center align-items-center bg-white p-5">
+        <div class="w-100" style="max-width: 400px;">
+            <h2 class="fw-bold mb-1">Вход</h2>
+            <p class="text-muted mb-4">Въведете имейл и парола.</p>
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+            <form id="account" method="post">
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username"
+                           aria-required="true" placeholder="ime@example.com" />
+                    <label asp-for="Input.Email">Имейл</label>
+                    <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password"
+                           aria-required="true" placeholder="парола" />
+                    <label asp-for="Input.Password">Парола</label>
+                    <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                    <label class="form-check-label" asp-for="Input.RememberMe">Запомни ме</label>
+                </div>
+                <button id="login-submit" type="submit" class="btn btn-lg w-100 text-white fw-semibold mb-3"
+                        style="background-color: #1565c0; border-color: #1565c0;">
+                    Влез
+                </button>
+            </form>
+
+            @if (hasGoogle)
+            {
+                <div class="d-flex align-items-center my-3">
+                    <hr class="flex-grow-1" />
+                    <span class="mx-3 text-muted small">или</span>
+                    <hr class="flex-grow-1" />
+                </div>
+                <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <button type="submit" class="btn btn-outline-secondary w-100"
+                            name="provider" value="Google">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                             width="18" class="me-2" alt="Google" />
+                        Вход с Google
+                    </button>
+                </form>
+            }
+
+            <hr class="my-3" />
+            <div class="text-center small">
+                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-decoration-none"
+                   style="color: #1565c0;">Нямате профил? Регистрирайте се</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

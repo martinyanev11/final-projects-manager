@@ -16,6 +16,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Student> Students { get; set; }
     public DbSet<Supervisor> Supervisors { get; set; }
     public DbSet<Specialisation> Specialisations { get; set; }
+    public DbSet<DefenseCommittee> DefenseCommittees { get; set; }
+    public DbSet<CommitteeMember> CommitteeMembers { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -58,5 +61,29 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .WithMany(sv => sv.ReviewedStudents)
             .HasForeignKey(s => s.ReviewerId)
             .OnDelete(DeleteBehavior.ClientSetNull);
+
+        builder.Entity<Student>()
+            .HasOne(s => s.Committee)
+            .WithMany(c => c.Students)
+            .HasForeignKey(s => s.CommitteeId)
+            .OnDelete(DeleteBehavior.ClientSetNull);
+
+        builder.Entity<CommitteeMember>()
+            .HasOne(cm => cm.Committee)
+            .WithMany(c => c.Members)
+            .HasForeignKey(cm => cm.CommitteeId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<CommitteeMember>()
+            .HasOne(cm => cm.Supervisor)
+            .WithMany()
+            .HasForeignKey(cm => cm.SupervisorId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<Notification>()
+            .HasOne(n => n.Recipient)
+            .WithMany()
+            .HasForeignKey(n => n.RecipientUserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

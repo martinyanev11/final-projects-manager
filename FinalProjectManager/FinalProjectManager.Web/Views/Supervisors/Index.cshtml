@@ -1,30 +1,37 @@
 @model IEnumerable<FinalProjectManager.Data.Models.Supervisor>
 @{
-    ViewData["Title"] = "Supervisors";
+    ViewData["Title"] = "Учители";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Supervisors</h2>
-    <a asp-action="Create" class="btn btn-primary">+ Add Supervisor</a>
+    <h2 class="fw-bold mb-0">Учители</h2>
+    <a asp-action="Create" class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;">+ Добави учител</a>
 </div>
 
-<form method="get" class="row g-2 mb-4">
-    <div class="col-auto flex-grow-1">
+<form method="get" class="row g-2 mb-4 align-items-end">
+    <div class="col-md-5">
+        <label class="form-label small text-muted mb-1">Търсене</label>
         <input type="text" name="search" value="@ViewData["Search"]"
-               class="form-control" placeholder="Search by name or email..." />
+               class="form-control" placeholder="Търсене по име или имейл..." />
     </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-outline-secondary">Search</button>
-        @if (!string.IsNullOrEmpty(ViewData["Search"]?.ToString()))
+    <div class="col-md-4">
+        <label class="form-label small text-muted mb-1">Специализация</label>
+        <select name="specialisationId" asp-items="ViewBag.FilterSpecialisations" class="form-select">
+            <option value="">— Всички специализации —</option>
+        </select>
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+        <button type="submit" class="btn text-white fw-semibold w-100" style="background-color:#1565c0;">Филтрирай</button>
+        @if (!string.IsNullOrEmpty(ViewData["Search"]?.ToString()) || ViewData["SelectedSpecialisation"] != null)
         {
-            <a asp-action="Index" class="btn btn-outline-danger ms-1">Clear</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">✕</a>
         }
     </div>
 </form>
 
 @if (!Model.Any())
 {
-    <div class="alert alert-info">No supervisors found.</div>
+    <div class="alert alert-info">Няма намерени учители.</div>
 }
 else
 {
@@ -32,10 +39,10 @@ else
         <thead class="table-dark">
             <tr>
                 <th>#</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Specialisation</th>
-                <th class="text-end">Actions</th>
+                <th>Пълно Име</th>
+                <th>Имейл</th>
+                <th>Специализация</th>
+                <th class="text-end">Действия</th>
             </tr>
         </thead>
         <tbody>
@@ -47,9 +54,9 @@ else
                     <td>@supervisor.Email</td>
                     <td>@supervisor.Specialisation?.Name</td>
                     <td class="text-end">
-                        <a asp-action="Details" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-info">Details</a>
-                        <a asp-action="Edit" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-warning">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                        <a asp-action="Details" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-secondary">Детайли</a>
+                        <a asp-action="Edit" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-warning">Редактирай</a>
+                        <a asp-action="Delete" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-danger">Изтрий</a>
                     </td>
                 </tr>
             }

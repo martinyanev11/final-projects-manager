@@ -30,6 +30,9 @@ namespace FinalProjectManager.Web.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<bool>("CanLeadCommittee")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -94,6 +97,85 @@ namespace FinalProjectManager.Web.Data.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
+            modelBuilder.Entity("FinalProjectManager.Data.Models.CommitteeMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CommitteeId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsChair")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SupervisorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommitteeId");
+
+                    b.HasIndex("SupervisorId");
+
+                    b.ToTable("CommitteeMembers");
+                });
+
+            modelBuilder.Entity("FinalProjectManager.Data.Models.DefenseCommittee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DefenseCommittees");
+                });
+
+            modelBuilder.Entity("FinalProjectManager.Data.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipientUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipientUserId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("FinalProjectManager.Data.Models.Specialisation", b =>
                 {
                     b.Property<int>("Id")
@@ -125,6 +207,9 @@ namespace FinalProjectManager.Web.Data.Migrations
                         .HasMaxLength(2)
                         .HasColumnType("nvarchar(2)");
 
+                    b.Property<int?>("CommitteeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -148,6 +233,8 @@ namespace FinalProjectManager.Web.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CommitteeId");
 
                     b.HasIndex("ReviewerId");
 
@@ -350,8 +437,42 @@ namespace FinalProjectManager.Web.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("FinalProjectManager.Data.Models.CommitteeMember", b =>
+                {
+                    b.HasOne("FinalProjectManager.Data.Models.DefenseCommittee", "Committee")
+                        .WithMany("Members")
+                        .HasForeignKey("CommitteeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinalProjectManager.Data.Models.Supervisor", "Supervisor")
+                        .WithMany()
+                        .HasForeignKey("SupervisorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Committee");
+
+                    b.Navigation("Supervisor");
+                });
+
+            modelBuilder.Entity("FinalProjectManager.Data.Models.Notification", b =>
+                {
+                    b.HasOne("FinalProjectManager.Data.Models.ApplicationUser", "Recipient")
+                        .WithMany()
+                        .HasForeignKey("RecipientUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Recipient");
+                });
+
             modelBuilder.Entity("FinalProjectManager.Data.Models.Student", b =>
                 {
+                    b.HasOne("FinalProjectManager.Data.Models.DefenseCommittee", "Committee")
+                        .WithMany("Students")
+                        .HasForeignKey("CommitteeId");
+
                     b.HasOne("FinalProjectManager.Data.Models.Supervisor", "Reviewer")
                         .WithMany("ReviewedStudents")
                         .HasForeignKey("ReviewerId");
@@ -370,6 +491,8 @@ namespace FinalProjectManager.Web.Data.Migrations
                         .WithOne("AssignedStudent")
                         .HasForeignKey("FinalProjectManager.Data.Models.Student", "TopicId")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Committee");
 
                     b.Navigation("Reviewer");
 
@@ -451,6 +574,13 @@ namespace FinalProjectManager.Web.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FinalProjectManager.Data.Models.DefenseCommittee", b =>
+                {
+                    b.Navigation("Members");
+
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("FinalProjectManager.Data.Models.Specialisation", b =>

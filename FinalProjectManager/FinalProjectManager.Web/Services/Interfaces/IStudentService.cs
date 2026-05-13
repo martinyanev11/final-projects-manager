@@ -4,7 +4,7 @@ namespace FinalProjectManager.Web.Services.Interfaces;
 
 public interface IStudentService
 {
-    Task<IEnumerable<Student>> GetAllAsync(string? search = null);
+    Task<IEnumerable<Student>> GetAllAsync(string? search = null, int? specialisationId = null, string? className = null);
     Task<Student?> GetByIdAsync(int id);
     Task CreateAsync(Student student);
     Task UpdateAsync(Student student);

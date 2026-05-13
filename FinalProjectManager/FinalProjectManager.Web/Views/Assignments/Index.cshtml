@@ -1,36 +1,36 @@
 @model IEnumerable<FinalProjectManager.Data.Models.Student>
 @{
-    ViewData["Title"] = "Topic Assignments";
+    ViewData["Title"] = "Разпределение";
     var unassigned = Model.Count(s => s.TopicId == null);
     var noSupervisor = Model.Count(s => s.SupervisorId == null);
     var noReviewer = Model.Count(s => s.ReviewerId == null && s.SupervisorId != null);
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Assignments</h2>
+    <h2 class="fw-bold mb-0">Разпределение</h2>
     <div class="d-flex gap-2">
         <form asp-action="AutoAssign" method="post">
             @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-primary"
-                    onclick="return confirm('Auto-assign topics to all @unassigned unassigned student(s)?')"
+            <button type="submit" class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;"
+                    onclick="return confirm('Автоматично разпределяне на теми за @unassigned ученик(а)?')"
                     @(unassigned == 0 ? "disabled" : "")>
-                Auto-assign Topics (@unassigned)
+                Разпредели теми (@unassigned)
             </button>
         </form>
         <form asp-action="AutoAssignSupervisors" method="post">
             @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-success"
-                    onclick="return confirm('Auto-assign supervisors to @noSupervisor student(s)?')"
+            <button type="submit" class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;"
+                    onclick="return confirm('Автоматично разпределяне на ръководители за @noSupervisor ученик(а)?')"
                     @(noSupervisor == 0 ? "disabled" : "")>
-                Auto-assign Supervisors (@noSupervisor)
+                Разпредели ръководители (@noSupervisor)
             </button>
         </form>
         <form asp-action="AutoAssignReviewers" method="post">
             @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-info"
-                    onclick="return confirm('Auto-assign reviewers to @noReviewer student(s)?')"
+            <button type="submit" class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;"
+                    onclick="return confirm('Автоматично разпределяне на рецензенти за @noReviewer ученик(а)?')"
                     @(noReviewer == 0 ? "disabled" : "")>
-                Auto-assign Reviewers (@noReviewer)
+                Разпредели рецензенти (@noReviewer)
             </button>
         </form>
     </div>
@@ -53,19 +53,19 @@
 
 @if (!Model.Any())
 {
-    <div class="alert alert-info">No students in the system yet.</div>
+    <div class="alert alert-info">Все още няма ученици в системата.</div>
 }
 else
 {
     <table class="table table-striped table-hover">
         <thead class="table-dark">
             <tr>
-                <th>Student</th>
-                <th>Specialisation</th>
-                <th>Assigned Topic</th>
-                <th>Supervisor</th>
-                <th>Reviewer</th>
-                <th class="text-end">Action</th>
+                <th>Ученик</th>
+                <th>Специализация</th>
+                <th>Тема</th>
+                <th>Ръководител</th>
+                <th>Рецензент</th>
+                <th class="text-end">Действия</th>
             </tr>
         </thead>
         <tbody>
@@ -77,36 +77,36 @@ else
                     <td>
                         @if (student.Topic != null)
                         {
-                            <span class="badge bg-success">@student.Topic.Title</span>
+                            <span class="badge" style="background-color:#1565c0;">@student.Topic.Title</span>
                         }
                         else
                         {
-                            <span class="badge bg-secondary">Not assigned</span>
+                            <span class="badge bg-secondary">Не е разпределено</span>
                         }
                     </td>
                     <td>
                         @if (student.Supervisor != null)
                         {
-                            <span class="badge bg-success">@student.Supervisor.FullName</span>
+                            <span class="badge" style="background-color:#1565c0;">@student.Supervisor.FullName</span>
                         }
                         else
                         {
-                            <span class="badge bg-secondary">Not assigned</span>
+                            <span class="badge bg-secondary">Не е разпределено</span>
                         }
                     </td>
                     <td>
                         @if (student.Reviewer != null)
                         {
-                            <span class="badge bg-success">@student.Reviewer.FullName</span>
+                            <span class="badge" style="background-color:#1565c0;">@student.Reviewer.FullName</span>
                         }
                         else
                         {
-                            <span class="badge bg-secondary">Not assigned</span>
+                            <span class="badge bg-secondary">Не е разпределено</span>
                         }
                     </td>
                     <td class="text-end">
                         <a asp-action="EditTopic" asp-route-studentId="@student.Id"
-                           class="btn btn-sm btn-outline-warning">Change Topic</a>
+                           class="btn btn-sm btn-outline-warning">Смени тема</a>
                     </td>
                 </tr>
             }
