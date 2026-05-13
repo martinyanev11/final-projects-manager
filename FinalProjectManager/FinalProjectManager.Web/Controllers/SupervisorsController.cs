@@ -20,10 +20,15 @@ public class SupervisorsController : Controller
         _specialisationService = specialisationService;
     }
 
-    public async Task<IActionResult> Index(string? search)
+    public async Task<IActionResult> Index(string? search, int? specialisationId)
     {
         ViewData["Search"] = search;
-        var supervisors = await _supervisorService.GetAllAsync(search);
+        ViewData["SelectedSpecialisation"] = specialisationId;
+
+        var specialisations = await _specialisationService.GetAllAsync();
+        ViewBag.FilterSpecialisations = new SelectList(specialisations, "Id", "Name", specialisationId);
+
+        var supervisors = await _supervisorService.GetAllAsync(search, specialisationId);
         return View(supervisors);
     }
 

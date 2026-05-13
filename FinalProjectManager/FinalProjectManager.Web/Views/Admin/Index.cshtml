@@ -16,7 +16,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
                     <div class="rounded-3 p-2 me-3" style="background-color:#e3f0fc;">
-                        <span style="font-size:1.4rem;">📄</span>
+                        <span style="font-size:1.4rem;">&#128196;</span>
                     </div>
                     <h5 class="card-title mb-0 fw-semibold">Теми</h5>
                 </div>
@@ -34,7 +34,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
                     <div class="rounded-3 p-2 me-3" style="background-color:#e3f0fc;">
-                        <span style="font-size:1.4rem;">🎓</span>
+                        <span style="font-size:1.4rem;">&#127891;</span>
                     </div>
                     <h5 class="card-title mb-0 fw-semibold">Ученици</h5>
                 </div>
@@ -52,15 +52,17 @@
             <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
                     <div class="rounded-3 p-2 me-3" style="background-color:#e3f0fc;">
-                        <span style="font-size:1.4rem;">👨‍🏫</span>
+                        <span style="font-size:1.4rem;">&#128104;&#8205;&#127979;</span>
                     </div>
                     <h5 class="card-title mb-0 fw-semibold">Учители</h5>
                 </div>
-                <p class="card-text text-muted small">Управление на данните на учителите — създаване, редактиране и изтриване.</p>
+                <p class="card-text text-muted small">Управление на учителите и преглед на всички регистрирани учители с техния статус.</p>
             </div>
-            <div class="card-footer bg-transparent border-0 pb-3">
+            <div class="card-footer bg-transparent border-0 pb-3 d-flex gap-2">
                 <a asp-controller="Supervisors" asp-action="Index"
                    class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;">Управление</a>
+                <a asp-action="AllSupervisors"
+                   class="btn btn-sm btn-outline-secondary fw-semibold">Всички учители</a>
             </div>
         </div>
     </div>
@@ -70,7 +72,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
                     <div class="rounded-3 p-2 me-3" style="background-color:#e3f0fc;">
-                        <span style="font-size:1.4rem;">🔀</span>
+                        <span style="font-size:1.4rem;">&#128256;</span>
                     </div>
                     <h5 class="card-title mb-0 fw-semibold">Разпределение</h5>
                 </div>
@@ -88,7 +90,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
                     <div class="rounded-3 p-2 me-3" style="background-color:#fff8e1;">
-                        <span style="font-size:1.4rem;">⏳</span>
+                        <span style="font-size:1.4rem;">&#9203;</span>
                     </div>
                     <h5 class="card-title mb-0 fw-semibold">Чакащи одобрение</h5>
                 </div>
@@ -106,25 +108,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
                     <div class="rounded-3 p-2 me-3" style="background-color:#e3f0fc;">
-                        <span style="font-size:1.4rem;">👥</span>
-                    </div>
-                    <h5 class="card-title mb-0 fw-semibold">Всички учители</h5>
-                </div>
-                <p class="card-text text-muted small">Всички регистрирани учители и техния статус на одобрение.</p>
-            </div>
-            <div class="card-footer bg-transparent border-0 pb-3">
-                <a asp-action="AllSupervisors"
-                   class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;">Преглед</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card h-100 border-0 shadow-sm">
-            <div class="card-body">
-                <div class="d-flex align-items-center mb-3">
-                    <div class="rounded-3 p-2 me-3" style="background-color:#e3f0fc;">
-                        <span style="font-size:1.4rem;">🏷️</span>
+                        <span style="font-size:1.4rem;">&#127991;</span>
                     </div>
                     <h5 class="card-title mb-0 fw-semibold">Специализации</h5>
                 </div>

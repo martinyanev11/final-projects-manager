@@ -1,6 +1,7 @@
 @model IEnumerable<FinalProjectManager.Data.Models.Student>
 @{
     ViewData["Title"] = "Ученици";
+    var grouped = Model.GroupBy(s => s.ClassName).OrderBy(g => g.Key);
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -8,16 +9,29 @@
     <a asp-action="Create" class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;">+ Добави ученик</a>
 </div>
 
-<form method="get" class="row g-2 mb-4">
-    <div class="col-auto flex-grow-1">
+<form method="get" class="row g-2 mb-4 align-items-end">
+    <div class="col-md-4">
+        <label class="form-label small text-muted mb-1">Търсене</label>
         <input type="text" name="search" value="@ViewData["Search"]"
                class="form-control" placeholder="Търсене по име или имейл..." />
     </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-outline-secondary">Търси</button>
-        @if (!string.IsNullOrEmpty(ViewData["Search"]?.ToString()))
+    <div class="col-md-3">
+        <label class="form-label small text-muted mb-1">Специализация</label>
+        <select name="specialisationId" asp-items="ViewBag.FilterSpecialisations" class="form-select">
+            <option value="">— Всички специализации —</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label small text-muted mb-1">Клас</label>
+        <select name="className" asp-items="ViewBag.FilterClasses" class="form-select">
+            <option value="">— Всички класове —</option>
+        </select>
+    </div>
+    <div class="col-md-2 d-flex gap-2">
+        <button type="submit" class="btn text-white fw-semibold w-100" style="background-color:#1565c0;">Филтрирай</button>
+        @if (!string.IsNullOrEmpty(ViewData["Search"]?.ToString()) || ViewData["SelectedSpecialisation"] != null || !string.IsNullOrEmpty(ViewData["SelectedClass"]?.ToString()))
         {
-            <a asp-action="Index" class="btn btn-outline-danger ms-1">Изчисти</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">✕</a>
         }
     </div>
 </form>
@@ -28,32 +42,39 @@
 }
 else
 {
-    <table class="table table-striped table-hover">
+    <table class="table table-hover">
         <thead class="table-dark">
             <tr>
                 <th>#</th>
                 <th>Пълно Име</th>
                 <th>Имейл</th>
                 <th>Специализация</th>
-                <th>Клас</th>
                 <th class="text-end">Действия</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var student in Model)
+            @foreach (var group in grouped)
             {
-                <tr>
-                    <td>@student.Id</td>
-                    <td>@student.FullName</td>
-                    <td>@student.Email</td>
-                    <td>@student.Specialisation?.Name</td>
-                    <td>@student.ClassName</td>
-                    <td class="text-end">
-                        <a asp-action="Details" asp-route-id="@student.Id" class="btn btn-sm btn-outline-secondary">Детайли</a>
-                        <a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-sm btn-outline-warning">Редактирай</a>
-                        <a asp-action="Delete" asp-route-id="@student.Id" class="btn btn-sm btn-outline-danger">Изтрий</a>
+                <tr class="table-active">
+                    <td colspan="5" class="fw-semibold" style="background-color:#e3f0fc; color:#1565c0;">
+                        Клас 12@group.Key
+                        <span class="badge ms-2" style="background-color:#1565c0;">@group.Count() ученика</span>
                     </td>
                 </tr>
+                @foreach (var student in group)
+                {
+                    <tr>
+                        <td>@student.Id</td>
+                        <td>@student.FullName</td>
+                        <td>@student.Email</td>
+                        <td>@student.Specialisation?.Name</td>
+                        <td class="text-end">
+                            <a asp-action="Details" asp-route-id="@student.Id" class="btn btn-sm btn-outline-secondary">Детайли</a>
+                            <a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-sm btn-outline-warning">Редактирай</a>
+                            <a asp-action="Delete" asp-route-id="@student.Id" class="btn btn-sm btn-outline-danger">Изтрий</a>
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>

@@ -8,16 +8,23 @@
     <a asp-action="Create" class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;">+ Добави учител</a>
 </div>
 
-<form method="get" class="row g-2 mb-4">
-    <div class="col-auto flex-grow-1">
+<form method="get" class="row g-2 mb-4 align-items-end">
+    <div class="col-md-5">
+        <label class="form-label small text-muted mb-1">Търсене</label>
         <input type="text" name="search" value="@ViewData["Search"]"
                class="form-control" placeholder="Търсене по име или имейл..." />
     </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-outline-secondary">Търси</button>
-        @if (!string.IsNullOrEmpty(ViewData["Search"]?.ToString()))
+    <div class="col-md-4">
+        <label class="form-label small text-muted mb-1">Специализация</label>
+        <select name="specialisationId" asp-items="ViewBag.FilterSpecialisations" class="form-select">
+            <option value="">— Всички специализации —</option>
+        </select>
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+        <button type="submit" class="btn text-white fw-semibold w-100" style="background-color:#1565c0;">Филтрирай</button>
+        @if (!string.IsNullOrEmpty(ViewData["Search"]?.ToString()) || ViewData["SelectedSpecialisation"] != null)
         {
-            <a asp-action="Index" class="btn btn-outline-danger ms-1">Изчисти</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">✕</a>
         }
     </div>
 </form>

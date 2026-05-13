@@ -15,14 +15,20 @@ public class StudentService : IStudentService
         _context = context;
     }
 
-    public async Task<IEnumerable<Student>> GetAllAsync(string? search = null)
+    public async Task<IEnumerable<Student>> GetAllAsync(string? search = null, int? specialisationId = null, string? className = null)
     {
         var query = _context.Students.Include(s => s.Specialisation).AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(search))
             query = query.Where(s => s.FullName.Contains(search) || s.Email.Contains(search));
 
-        return await query.OrderBy(s => s.FullName).ToListAsync();
+        if (specialisationId.HasValue)
+            query = query.Where(s => s.SpecialisationId == specialisationId.Value);
+
+        if (!string.IsNullOrWhiteSpace(className))
+            query = query.Where(s => s.ClassName == className);
+
+        return await query.OrderBy(s => s.ClassName).ThenBy(s => s.FullName).ToListAsync();
     }
 
     public async Task<Student?> GetByIdAsync(int id)
