@@ -43,6 +43,17 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 .AddDefaultTokenProviders()
 .AddClaimsPrincipalFactory<ApplicationUserClaimsFactory>();
 
+var googleClientId = builder.Configuration["Authentication:Google:ClientId"];
+var googleClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+if (!string.IsNullOrEmpty(googleClientId) && !string.IsNullOrEmpty(googleClientSecret))
+{
+    builder.Services.AddAuthentication().AddGoogle(options =>
+    {
+        options.ClientId = googleClientId;
+        options.ClientSecret = googleClientSecret;
+    });
+}
+
 // =============================================
 // 2. APPLICATION SERVICES
 // =============================================

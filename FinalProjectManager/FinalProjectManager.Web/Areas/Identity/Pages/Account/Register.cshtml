@@ -1,0 +1,89 @@
+@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Регистрация";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row g-0" style="min-height: 82vh;">
+
+    <!-- Left green panel -->
+    <div class="col-md-5 d-none d-md-flex flex-column justify-content-center align-items-center text-white p-5"
+         style="background-color: #1a7a5e;">
+        <div class="text-center">
+            <div class="mb-4" style="font-size: 3rem;">🎓</div>
+            <h2 class="fw-bold mb-3">Създайте профил</h2>
+            <p class="opacity-75 mb-0">Регистрирайте се като ученик и получете достъп до своята тема и ръководител.</p>
+        </div>
+    </div>
+
+    <!-- Right form panel -->
+    <div class="col-md-7 d-flex flex-column justify-content-center align-items-center bg-white p-5">
+        <div class="w-100" style="max-width: 400px;">
+            <h2 class="fw-bold mb-1">Регистрация</h2>
+            <p class="text-muted mb-4">Попълнете данните си за нов профил.</p>
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username"
+                           aria-required="true" placeholder="ime@example.com" />
+                    <label asp-for="Input.Email">Имейл</label>
+                    <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="new-password"
+                           aria-required="true" placeholder="парола" />
+                    <label asp-for="Input.Password">Парола</label>
+                    <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password"
+                           aria-required="true" placeholder="потвърди паролата" />
+                    <label asp-for="Input.ConfirmPassword">Потвърди паролата</label>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
+                </div>
+                <button id="registerSubmit" type="submit" class="btn btn-lg w-100 text-white fw-semibold mb-3"
+                        style="background-color: #1a7a5e; border-color: #1a7a5e;">
+                    Регистрирай се
+                </button>
+            </form>
+
+            @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+            {
+                <div class="d-flex align-items-center my-3">
+                    <hr class="flex-grow-1" />
+                    <span class="mx-3 text-muted small">или</span>
+                    <hr class="flex-grow-1" />
+                </div>
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl"
+                      method="post">
+                    @foreach (var provider in Model.ExternalLogins!)
+                    {
+                        <button type="submit" class="btn btn-outline-secondary w-100 mb-2"
+                                name="provider" value="@provider.Name">
+                            @if (provider.Name == "Google")
+                            {
+                                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                                     width="18" class="me-2" alt="Google" />
+                            }
+                            Регистрация с @provider.DisplayName
+                        </button>
+                    }
+                </form>
+            }
+
+            <hr class="my-3" />
+            <div class="text-center small">
+                <a asp-page="./Login" class="text-decoration-none" style="color: #1a7a5e;">
+                    Вече имате профил? Влезте тук
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
