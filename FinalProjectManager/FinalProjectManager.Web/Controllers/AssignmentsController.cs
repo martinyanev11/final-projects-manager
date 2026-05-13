@@ -121,9 +121,3 @@ public class AssignmentsController : Controller
         }
     }
 }
-          return View(vm);
-        }
-    }
-}
-}
-}
