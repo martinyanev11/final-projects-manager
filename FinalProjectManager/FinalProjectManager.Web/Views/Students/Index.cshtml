@@ -46,9 +46,10 @@ else
         <thead class="table-dark">
             <tr>
                 <th>#</th>
-                <th>Пълно Име</th>
+                <th>Пълно Ime</th>
                 <th>Имейл</th>
                 <th>Специализация</th>
+                <th>Клас</th>
                 <th class="text-end">Действия</th>
             </tr>
         </thead>
@@ -57,7 +58,7 @@ else
             {
                 var rowNum = 1;
                 <tr>
-                    <td colspan="5" class="fw-semibold" style="background-color:#e3f0fc; color:#1565c0;">
+                    <td colspan="6" class="fw-semibold" style="background-color:#e3f0fc; color:#1565c0;">
                         Клас 12@group.Key
                         <span class="badge ms-2" style="background-color:#1565c0;">@group.Count() ученика</span>
                     </td>
@@ -69,6 +70,7 @@ else
                         <td>@student.FullName</td>
                         <td>@student.Email</td>
                         <td>@student.Specialisation?.Name</td>
+                        <td>12@student.ClassName</td>
                         <td class="text-end">
                             <a asp-action="Details" asp-route-id="@student.Id" class="btn btn-sm btn-outline-secondary">Детайли</a>
                             <a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-sm btn-outline-warning">Редактирай</a>
