@@ -6,6 +6,7 @@ using FinalProjectManager.Web.ViewModels;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 
 namespace FinalProjectManager.Web.Controllers;
@@ -15,30 +16,46 @@ public class SupervisorRegistrationController : Controller
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IEmailService _emailService;
     private readonly EmailSettings _emailSettings;
+    private readonly ISpecialisationService _specialisationService;
+    private readonly INotificationService _notificationService;
 
     public SupervisorRegistrationController(
         UserManager<ApplicationUser> userManager,
         IEmailService emailService,
-        IOptions<EmailSettings> emailSettings)
+        IOptions<EmailSettings> emailSettings,
+        ISpecialisationService specialisationService,
+        INotificationService notificationService)
     {
         _userManager = userManager;
         _emailService = emailService;
         _emailSettings = emailSettings.Value;
+        _specialisationService = specialisationService;
+        _notificationService = notificationService;
     }
 
-    public IActionResult Register() => View();
+    public async Task<IActionResult> Register()
+    {
+        await PopulateSpecialisationsAsync();
+        return View();
+    }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Register(SupervisorRegisterViewModel model)
     {
-        if (!ModelState.IsValid) return View(model);
+        if (!ModelState.IsValid)
+        {
+            await PopulateSpecialisationsAsync(model.SpecialisationId);
+            return View(model);
+        }
+
+        var fullName = $"{model.FirstName} {model.MiddleName} {model.LastName}".Trim();
 
         var user = new ApplicationUser
         {
             UserName = model.Email,
             Email = model.Email,
-            FullName = model.FullName,
+            FullName = fullName,
             IsApproved = false,
             EmailConfirmed = true
         };
@@ -49,25 +66,25 @@ public class SupervisorRegistrationController : Controller
         {
             foreach (var error in result.Errors)
                 ModelState.AddModelError(string.Empty, error.Description);
+            await PopulateSpecialisationsAsync(model.SpecialisationId);
             return View(model);
         }
 
         await _userManager.AddToRoleAsync(user, AppRoles.Supervisor);
 
-        await _emailService.SendEmailAsync(
-            _emailSettings.AdminEmail,
-            "New Supervisor Registration Awaiting Approval",
-            $"""
-            <p>A new supervisor has registered and is awaiting approval:</p>
-            <ul>
-                <li><strong>Name:</strong> {model.FullName}</li>
-                <li><strong>Email:</strong> {model.Email}</li>
-            </ul>
-            <p>Please log in to the <a href="{Request.Scheme}://{Request.Host}/Admin/PendingApprovals">admin panel</a> to review the request.</p>
-            """);
+        await _notificationService.NotifyAdminsAsync(
+            "Нова регистрация на учител",
+            $"Учителят {fullName} ({model.Email}) се е регистрирал и очаква одобрение.",
+            "/Admin/PendingApprovals");
 
         return RedirectToAction(nameof(PendingApproval));
     }
 
     public IActionResult PendingApproval() => View();
+
+    private async Task PopulateSpecialisationsAsync(int? selectedId = null)
+    {
+        var specialisations = await _specialisationService.GetAllAsync();
+        ViewBag.Specialisations = new SelectList(specialisations, "Id", "Name", selectedId);
+    }
 }

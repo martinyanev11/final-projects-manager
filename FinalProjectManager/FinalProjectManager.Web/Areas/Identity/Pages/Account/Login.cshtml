@@ -48,29 +48,19 @@
                 </button>
             </form>
 
-            @if ((Model.ExternalLogins?.Count ?? 0) > 0)
-            {
-                <div class="d-flex align-items-center my-3">
-                    <hr class="flex-grow-1" />
-                    <span class="mx-3 text-muted small">или</span>
-                    <hr class="flex-grow-1" />
-                </div>
-                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl"
-                      method="post">
-                    @foreach (var provider in Model.ExternalLogins!)
-                    {
-                        <button type="submit" class="btn btn-outline-secondary w-100 mb-2"
-                                name="provider" value="@provider.Name">
-                            @if (provider.Name == "Google")
-                            {
-                                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                                     width="18" class="me-2" alt="Google" />
-                            }
-                            Вход с @provider.DisplayName
-                        </button>
-                    }
-                </form>
-            }
+            <div class="d-flex align-items-center my-3">
+                <hr class="flex-grow-1" />
+                <span class="mx-3 text-muted small">или</span>
+                <hr class="flex-grow-1" />
+            </div>
+            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <button type="submit" class="btn btn-outline-secondary w-100 mb-2"
+                        name="provider" value="Google">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                         width="18" class="me-2" alt="Google" />
+                    Вход с Google
+                </button>
+            </form>
 
             <hr class="my-3" />
             <div class="text-center small">
