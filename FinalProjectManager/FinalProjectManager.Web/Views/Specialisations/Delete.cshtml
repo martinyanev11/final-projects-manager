@@ -3,11 +3,11 @@
     ViewData["Title"] = "Изтрий специализация";
 }
 
-<h2>Delete Specialisation</h2>
+<h2>Изтрий специализация</h2>
 <hr />
 
 <div class="alert alert-danger">
-    Are you sure you want to delete this specialisation?
+    Сигурни ли сте, че искате да изтриете тази специализация?
 </div>
 
 <dl class="row">
@@ -21,7 +21,7 @@
 @if (Model.Students.Count > 0)
 {
     <div class="alert alert-warning">
-        This specialisation has @Model.Students.Count student(s) assigned. Reassign or remove them before deleting.
+        Към тази специализация са разпределени @Model.Students.Count ученик/ученици. Прехвърлете ги или ги премахнете преди да изтриете.
     </div>
 }
 

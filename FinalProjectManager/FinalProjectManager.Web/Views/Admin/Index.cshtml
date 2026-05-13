@@ -2,17 +2,17 @@
     ViewData["Title"] = "Админ табло";
 }
 
-<h2 class="mb-4">Admin Dashboard</h2>
+<h2 class="mb-4">Админ табло</h2>
 
 <div class="row g-4">
     <div class="col-md-4">
         <div class="card h-100 border-primary">
             <div class="card-body">
                 <h5 class="card-title">Теми</h5>
-                <p class="card-text text-muted">Manage thesis topics — create, edit, and delete.</p>
+                <p class="card-text text-muted">Управление на дипломни теми — създаване, редактиране и изтриване.</p>
             </div>
             <div class="card-footer bg-transparent">
-                <a asp-controller="Topics" asp-action="Index" class="btn btn-primary btn-sm">Manage Topics</a>
+                <a asp-controller="Topics" asp-action="Index" class="btn btn-primary btn-sm">Управление на теми</a>
             </div>
         </div>
     </div>
@@ -21,10 +21,10 @@
         <div class="card h-100 border-success">
             <div class="card-body">
                 <h5 class="card-title">Ученици</h5>
-                <p class="card-text text-muted">Manage student records — create, edit, and delete.</p>
+                <p class="card-text text-muted">Управление на ученически записи — създаване, редактиране и изтриване.</p>
             </div>
             <div class="card-footer bg-transparent">
-                <a asp-controller="Students" asp-action="Index" class="btn btn-success btn-sm">Manage Students</a>
+                <a asp-controller="Students" asp-action="Index" class="btn btn-success btn-sm">Управление на ученици</a>
             </div>
         </div>
     </div>
@@ -33,10 +33,10 @@
         <div class="card h-100 border-info">
             <div class="card-body">
                 <h5 class="card-title">Ръководители</h5>
-                <p class="card-text text-muted">Manage supervisor records — create, edit, and delete.</p>
+                <p class="card-text text-muted">Управление на записи на ръководители — създаване, редактиране и изтриване.</p>
             </div>
             <div class="card-footer bg-transparent">
-                <a asp-controller="Supervisors" asp-action="Index" class="btn btn-info btn-sm">Manage Supervisors</a>
+                <a asp-controller="Supervisors" asp-action="Index" class="btn btn-info btn-sm">Управление на ръководители</a>
             </div>
         </div>
     </div>
@@ -44,11 +44,11 @@
     <div class="col-md-4">
         <div class="card h-100 border-dark">
             <div class="card-body">
-                <h5 class="card-title">Topic Assignments</h5>
-                <p class="card-text text-muted">Auto-assign topics to students or override individual assignments.</p>
+                <h5 class="card-title">Разпределения на теми</h5>
+                <p class="card-text text-muted">Автоматично разпределяне на теми или ръчна промяна на разпределенията.</p>
             </div>
             <div class="card-footer bg-transparent">
-                <a asp-controller="Assignments" asp-action="Index" class="btn btn-dark btn-sm">Manage Assignments</a>
+                <a asp-controller="Assignments" asp-action="Index" class="btn btn-dark btn-sm">Управление на разпределенията</a>
             </div>
         </div>
     </div>
@@ -57,10 +57,10 @@
         <div class="card h-100 border-warning">
             <div class="card-body">
                 <h5 class="card-title">Чакащи одобрение</h5>
-                <p class="card-text text-muted">Review and approve supervisor registration requests.</p>
+                <p class="card-text text-muted">Преглед и одобряване на заявки за регистрация на ръководители.</p>
             </div>
             <div class="card-footer bg-transparent">
-                <a asp-action="PendingApprovals" class="btn btn-warning btn-sm">View Pending</a>
+                <a asp-action="PendingApprovals" class="btn btn-warning btn-sm">Преглед на чакащите</a>
             </div>
         </div>
     </div>
@@ -68,11 +68,11 @@
     <div class="col-md-4">
         <div class="card h-100 border-secondary">
             <div class="card-body">
-                <h5 class="card-title">All Supervisors</h5>
-                <p class="card-text text-muted">View all registered supervisors and their approval status.</p>
+                <h5 class="card-title">Всички ръководители</h5>
+                <p class="card-text text-muted">Преглед на всички регистрирани ръководители и техния статус на одобрение.</p>
             </div>
             <div class="card-footer bg-transparent">
-                <a asp-action="AllSupervisors" class="btn btn-secondary btn-sm">View Supervisors</a>
+                <a asp-action="AllSupervisors" class="btn btn-secondary btn-sm">Преглед на ръководителите</a>
             </div>
         </div>
     </div>
@@ -81,10 +81,10 @@
         <div class="card h-100 border-danger">
             <div class="card-body">
                 <h5 class="card-title">Специализации</h5>
-                <p class="card-text text-muted">Manage specialisations — create, edit, and delete.</p>
+                <p class="card-text text-muted">Управление на специализации — създаване, редактиране и изтриване.</p>
             </div>
             <div class="card-footer bg-transparent">
-                <a asp-controller="Specialisations" asp-action="Index" class="btn btn-danger btn-sm">Manage Specialisations</a>
+                <a asp-controller="Specialisations" asp-action="Index" class="btn btn-danger btn-sm">Управление на специализации</a>
             </div>
         </div>
     </div>
