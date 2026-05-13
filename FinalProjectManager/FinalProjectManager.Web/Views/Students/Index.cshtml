@@ -1,30 +1,30 @@
 @model IEnumerable<FinalProjectManager.Data.Models.Student>
 @{
-    ViewData["Title"] = "Students";
+    ViewData["Title"] = "Ученици";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Students</h2>
-    <a asp-action="Create" class="btn btn-primary">+ Add Student</a>
+    <h2 class="fw-bold mb-0">Ученици</h2>
+    <a asp-action="Create" class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;">+ Добави ученик</a>
 </div>
 
 <form method="get" class="row g-2 mb-4">
     <div class="col-auto flex-grow-1">
         <input type="text" name="search" value="@ViewData["Search"]"
-               class="form-control" placeholder="Search by name or email..." />
+               class="form-control" placeholder="Търсене по име или имейл..." />
     </div>
     <div class="col-auto">
-        <button type="submit" class="btn btn-outline-secondary">Search</button>
+        <button type="submit" class="btn btn-outline-secondary">Търси</button>
         @if (!string.IsNullOrEmpty(ViewData["Search"]?.ToString()))
         {
-            <a asp-action="Index" class="btn btn-outline-danger ms-1">Clear</a>
+            <a asp-action="Index" class="btn btn-outline-danger ms-1">Изчисти</a>
         }
     </div>
 </form>
 
 @if (!Model.Any())
 {
-    <div class="alert alert-info">No students found.</div>
+    <div class="alert alert-info">Няма намерени ученици.</div>
 }
 else
 {
@@ -32,11 +32,11 @@ else
         <thead class="table-dark">
             <tr>
                 <th>#</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Specialisation</th>
-                <th>Class</th>
-                <th class="text-end">Actions</th>
+                <th>Пълно Име</th>
+                <th>Имейл</th>
+                <th>Специализация</th>
+                <th>Клас</th>
+                <th class="text-end">Действия</th>
             </tr>
         </thead>
         <tbody>
@@ -49,9 +49,9 @@ else
                     <td>@student.Specialisation?.Name</td>
                     <td>@student.ClassName</td>
                     <td class="text-end">
-                        <a asp-action="Details" asp-route-id="@student.Id" class="btn btn-sm btn-outline-info">Details</a>
-                        <a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-sm btn-outline-warning">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@student.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                        <a asp-action="Details" asp-route-id="@student.Id" class="btn btn-sm btn-outline-secondary">Детайли</a>
+                        <a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-sm btn-outline-warning">Редактирай</a>
+                        <a asp-action="Delete" asp-route-id="@student.Id" class="btn btn-sm btn-outline-danger">Изтрий</a>
                     </td>
                 </tr>
             }

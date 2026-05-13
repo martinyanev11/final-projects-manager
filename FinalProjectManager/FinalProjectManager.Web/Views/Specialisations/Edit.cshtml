@@ -1,9 +1,9 @@
 @model FinalProjectManager.Data.Models.Specialisation
 @{
-    ViewData["Title"] = "Edit Specialisation";
+    ViewData["Title"] = "Редактирай специализация";
 }
 
-<h2>Edit Specialisation</h2>
+<h2 class="fw-bold mb-1">Редактирай специализация</h2>
 <hr />
 
 <div class="row">
@@ -13,13 +13,13 @@
             <input type="hidden" asp-for="Id" />
 
             <div class="mb-3">
-                <label asp-for="Name" class="form-label"></label>
+                <label asp-for="Name" class="form-label">Наименование</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-warning">Save</button>
-            <a asp-action="Index" class="btn btn-secondary ms-1">Cancel</a>
+            <button type="submit" class="btn text-white fw-semibold" style="background-color:#1565c0;">Запази</button>
+            <a asp-action="Index" class="btn btn-outline-secondary ms-1">Отказ</a>
         </form>
     </div>
 </div>

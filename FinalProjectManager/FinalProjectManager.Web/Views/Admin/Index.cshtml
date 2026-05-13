@@ -1,91 +1,140 @@
 @{
-    ViewData["Title"] = "Admin Dashboard";
+    ViewData["Title"] = "Административно табло";
 }
 
-<h2 class="mb-4">Admin Dashboard</h2>
+<div class="d-flex align-items-center mb-4 gap-3">
+    <div>
+        <h2 class="fw-bold mb-0">Административно табло</h2>
+        <p class="text-muted mb-0 small">Управление на системата за дипломни работи</p>
+    </div>
+</div>
 
 <div class="row g-4">
+
     <div class="col-md-4">
-        <div class="card h-100 border-primary">
+        <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title">Topics</h5>
-                <p class="card-text text-muted">Manage thesis topics — create, edit, and delete.</p>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-3 p-2 me-3" style="background-color:#e3f0fc;">
+                        <span style="font-size:1.4rem;">📄</span>
+                    </div>
+                    <h5 class="card-title mb-0 fw-semibold">Теми</h5>
+                </div>
+                <p class="card-text text-muted small">Управление на теми за дипломни работи — създаване, редактиране и изтриване.</p>
             </div>
-            <div class="card-footer bg-transparent">
-                <a asp-controller="Topics" asp-action="Index" class="btn btn-primary btn-sm">Manage Topics</a>
+            <div class="card-footer bg-transparent border-0 pb-3">
+                <a asp-controller="Topics" asp-action="Index"
+                   class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;">Управление</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="card h-100 border-success">
+        <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title">Students</h5>
-                <p class="card-text text-muted">Manage student records — create, edit, and delete.</p>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-3 p-2 me-3" style="background-color:#e3f0fc;">
+                        <span style="font-size:1.4rem;">🎓</span>
+                    </div>
+                    <h5 class="card-title mb-0 fw-semibold">Ученици</h5>
+                </div>
+                <p class="card-text text-muted small">Управление на данните на учениците — създаване, редактиране и изтриване.</p>
             </div>
-            <div class="card-footer bg-transparent">
-                <a asp-controller="Students" asp-action="Index" class="btn btn-success btn-sm">Manage Students</a>
+            <div class="card-footer bg-transparent border-0 pb-3">
+                <a asp-controller="Students" asp-action="Index"
+                   class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;">Управление</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="card h-100 border-info">
+        <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title">Supervisors</h5>
-                <p class="card-text text-muted">Manage supervisor records — create, edit, and delete.</p>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-3 p-2 me-3" style="background-color:#e3f0fc;">
+                        <span style="font-size:1.4rem;">👨‍🏫</span>
+                    </div>
+                    <h5 class="card-title mb-0 fw-semibold">Учители</h5>
+                </div>
+                <p class="card-text text-muted small">Управление на данните на учителите — създаване, редактиране и изтриване.</p>
             </div>
-            <div class="card-footer bg-transparent">
-                <a asp-controller="Supervisors" asp-action="Index" class="btn btn-info btn-sm">Manage Supervisors</a>
+            <div class="card-footer bg-transparent border-0 pb-3">
+                <a asp-controller="Supervisors" asp-action="Index"
+                   class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;">Управление</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="card h-100 border-dark">
+        <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title">Topic Assignments</h5>
-                <p class="card-text text-muted">Auto-assign topics to students or override individual assignments.</p>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-3 p-2 me-3" style="background-color:#e3f0fc;">
+                        <span style="font-size:1.4rem;">🔀</span>
+                    </div>
+                    <h5 class="card-title mb-0 fw-semibold">Разпределение</h5>
+                </div>
+                <p class="card-text text-muted small">Автоматично разпределяне на теми, ръководители и рецензенти на ученици.</p>
             </div>
-            <div class="card-footer bg-transparent">
-                <a asp-controller="Assignments" asp-action="Index" class="btn btn-dark btn-sm">Manage Assignments</a>
+            <div class="card-footer bg-transparent border-0 pb-3">
+                <a asp-controller="Assignments" asp-action="Index"
+                   class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;">Управление</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="card h-100 border-warning">
+        <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title">Pending Approvals</h5>
-                <p class="card-text text-muted">Review and approve supervisor registration requests.</p>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-3 p-2 me-3" style="background-color:#fff8e1;">
+                        <span style="font-size:1.4rem;">⏳</span>
+                    </div>
+                    <h5 class="card-title mb-0 fw-semibold">Чакащи одобрение</h5>
+                </div>
+                <p class="card-text text-muted small">Преглед и одобрение на заявки за регистрация от учители.</p>
             </div>
-            <div class="card-footer bg-transparent">
-                <a asp-action="PendingApprovals" class="btn btn-warning btn-sm">View Pending</a>
+            <div class="card-footer bg-transparent border-0 pb-3">
+                <a asp-action="PendingApprovals"
+                   class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;">Преглед</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="card h-100 border-secondary">
+        <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title">All Supervisors</h5>
-                <p class="card-text text-muted">View all registered supervisors and their approval status.</p>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-3 p-2 me-3" style="background-color:#e3f0fc;">
+                        <span style="font-size:1.4rem;">👥</span>
+                    </div>
+                    <h5 class="card-title mb-0 fw-semibold">Всички учители</h5>
+                </div>
+                <p class="card-text text-muted small">Всички регистрирани учители и техния статус на одобрение.</p>
             </div>
-            <div class="card-footer bg-transparent">
-                <a asp-action="AllSupervisors" class="btn btn-secondary btn-sm">View Supervisors</a>
+            <div class="card-footer bg-transparent border-0 pb-3">
+                <a asp-action="AllSupervisors"
+                   class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;">Преглед</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="card h-100 border-danger">
+        <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title">Specialisations</h5>
-                <p class="card-text text-muted">Manage specialisations — create, edit, and delete.</p>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-3 p-2 me-3" style="background-color:#e3f0fc;">
+                        <span style="font-size:1.4rem;">🏷️</span>
+                    </div>
+                    <h5 class="card-title mb-0 fw-semibold">Специализации</h5>
+                </div>
+                <p class="card-text text-muted small">Управление на специализациите — създаване, редактиране и изтриване.</p>
             </div>
-            <div class="card-footer bg-transparent">
-                <a asp-controller="Specialisations" asp-action="Index" class="btn btn-danger btn-sm">Manage Specialisations</a>
+            <div class="card-footer bg-transparent border-0 pb-3">
+                <a asp-controller="Specialisations" asp-action="Index"
+                   class="btn btn-sm text-white fw-semibold" style="background-color:#1565c0;">Управление</a>
             </div>
         </div>
     </div>
+
 </div>
