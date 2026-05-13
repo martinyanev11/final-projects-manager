@@ -39,14 +39,21 @@ else
                             }
                         </div>
                     </div>
-                    @if (!notification.IsRead)
-                    {
-                        <form asp-action="MarkRead" method="post" class="ms-3 flex-shrink-0">
+                    <div class="ms-3 flex-shrink-0 d-flex gap-1">
+                        @if (!notification.IsRead)
+                        {
+                            <form asp-action="MarkRead" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@notification.Id" />
+                                <button type="submit" class="btn btn-sm btn-outline-secondary">Прочетено</button>
+                            </form>
+                        }
+                        <form asp-action="Delete" method="post">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="id" value="@notification.Id" />
-                            <button type="submit" class="btn btn-sm btn-outline-secondary">Прочетено</button>
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Изтрий</button>
                         </form>
-                    }
+                    </div>
                 </div>
             </div>
         }

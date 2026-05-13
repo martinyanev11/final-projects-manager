@@ -10,5 +10,6 @@ public interface INotificationService
     Task<IEnumerable<Notification>> GetForUserAsync(string userId);
     Task MarkReadAsync(int notificationId, string userId);
     Task MarkAllReadAsync(string userId);
+    Task DeleteAsync(int notificationId, string userId);
     Task<int> GetUnreadCountAsync(string userId);
 }

@@ -43,4 +43,13 @@ public class NotificationsController : Controller
         await _notificationService.MarkAllReadAsync(userId);
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var userId = _userManager.GetUserId(User)!;
+        await _notificationService.DeleteAsync(id, userId);
+        return RedirectToAction(nameof(Index));
+    }
 }

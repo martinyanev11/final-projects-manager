@@ -20,10 +20,16 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">Вход</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-light" asp-controller="SupervisorRegistration" asp-action="Register">Register as Supervisor</a>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown">
+                Регистрация
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                <li><a class="dropdown-item" asp-controller="StudentRegistration" asp-action="Register">Ученик</a></li>
+                <li><a class="dropdown-item" asp-controller="SupervisorRegistration" asp-action="Register">Учител</a></li>
+            </ul>
         </li>
     }
 </ul>
