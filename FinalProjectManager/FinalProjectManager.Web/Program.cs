@@ -27,7 +27,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     // Password settings
     options.Password.RequireDigit = true;
-    options.Password.RequiredLength = 6;
+    options.Password.RequiredLength = 8;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
 
@@ -50,6 +50,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Email"));
 
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<ICommitteeService, CommitteeService>();
 builder.Services.AddScoped<IAssignmentService, AssignmentService>();
 builder.Services.AddScoped<ITopicService, TopicService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
