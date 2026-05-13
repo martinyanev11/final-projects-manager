@@ -1,6 +1,6 @@
 @model FinalProjectManager.Data.Models.Student
 @{
-    ViewData["Title"] = "Delete Student";
+    ViewData["Title"] = "Изтрий ученик";
 }
 
 <h2>Delete Student</h2>
@@ -14,18 +14,18 @@
     <dt class="col-sm-3">Full Name</dt>
     <dd class="col-sm-9">@Model.FullName</dd>
 
-    <dt class="col-sm-3">Email</dt>
+    <dt class="col-sm-3">Имейл</dt>
     <dd class="col-sm-9">@Model.Email</dd>
 
-    <dt class="col-sm-3">Specialisation</dt>
+    <dt class="col-sm-3">Специализация</dt>
     <dd class="col-sm-9">@Model.Specialisation?.Name</dd>
 
-    <dt class="col-sm-3">Class</dt>
+    <dt class="col-sm-3">Клас</dt>
     <dd class="col-sm-9">@Model.ClassName</dd>
 </dl>
 
 <form asp-action="Delete">
     <input type="hidden" asp-for="Id" />
-    <button type="submit" class="btn btn-danger">Delete</button>
-    <a asp-action="Index" class="btn btn-secondary ms-1">Cancel</a>
+    <button type="submit" class="btn btn-danger">Изтрий</button>
+    <a asp-action="Index" class="btn btn-secondary ms-1">Отказ</a>
 </form>

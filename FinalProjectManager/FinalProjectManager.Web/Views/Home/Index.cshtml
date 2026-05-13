@@ -1,10 +1,10 @@
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Начало";
 }
 
 <div class="text-center mb-5">
     <h1 class="display-5 fw-bold">Final Project Manager</h1>
-    <p class="lead text-muted">Managing thesis projects, supervisors, and defence committees for SoftUni Buditel.</p>
+    <p class="lead text-muted">Управление на дипломни проекти, ръководители и комисии за защита за СофтУни Будител.</p>
 </div>
 
 @if (!User.Identity!.IsAuthenticated)
@@ -13,27 +13,27 @@
         <div class="col-md-4">
             <div class="card text-center h-100">
                 <div class="card-body py-4">
-                    <h5 class="card-title">Student</h5>
-                    <p class="text-muted small">Access your thesis topic and supervisor information.</p>
-                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-primary btn-sm">Log in</a>
+                    <h5 class="card-title">Ученик</h5>
+                    <p class="text-muted small">Достъп до вашата дипломна тема и информация за ръководител.</p>
+                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-primary btn-sm">Вход</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card text-center h-100">
                 <div class="card-body py-4">
-                    <h5 class="card-title">Supervisor</h5>
-                    <p class="text-muted small">Register as a supervisor and await admin approval.</p>
-                    <a asp-controller="SupervisorRegistration" asp-action="Register" class="btn btn-outline-success btn-sm">Register as Supervisor</a>
+                    <h5 class="card-title">Ръководител</h5>
+                    <p class="text-muted small">Регистрирайте се като ръководител и изчакайте одобрение от администратор.</p>
+                    <a asp-controller="SupervisorRegistration" asp-action="Register" class="btn btn-outline-success btn-sm">Регистрация като ръководител</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card text-center h-100">
                 <div class="card-body py-4">
-                    <h5 class="card-title">Admin</h5>
-                    <p class="text-muted small">Manage topics, students, supervisors and approvals.</p>
-                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-warning btn-sm">Admin Login</a>
+                    <h5 class="card-title">Админ</h5>
+                    <p class="text-muted small">Управлявайте теми, ученици, ръководители и одобрения.</p>
+                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-warning btn-sm">Админ Вход</a>
                 </div>
             </div>
         </div>
@@ -42,13 +42,13 @@
 else if (User.IsInRole("Admin"))
 {
     <div class="text-center">
-        <p>Welcome back, <strong>@User.Identity.Name</strong>.</p>
-        <a asp-controller="Admin" asp-action="Index" class="btn btn-warning">Go to Admin Dashboard</a>
+        <p>Добре дошли отново, <strong>@User.Identity.Name</strong>.</p>
+        <a asp-controller="Admin" asp-action="Index" class="btn btn-warning">Към Админ таблото</a>
     </div>
 }
 else
 {
     <div class="text-center">
-        <p>Welcome back, <strong>@User.Identity.Name</strong>.</p>
+        <p>Добре дошли отново, <strong>@User.Identity.Name</strong>.</p>
     </div>
 }

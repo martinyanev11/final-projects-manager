@@ -1,6 +1,6 @@
 @model FinalProjectManager.Data.Models.Topic
 @{
-    ViewData["Title"] = "Edit Topic";
+    ViewData["Title"] = "Редактирай тема";
 }
 
 <h2>Edit Topic</h2>
@@ -25,15 +25,15 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="SpecialisationId" class="form-label">Specialisation</label>
+                <label asp-for="SpecialisationId" class="form-label">Специализация</label>
                 <select asp-for="SpecialisationId" asp-items="ViewBag.Specialisations" class="form-select">
                     <option value="">— Select specialisation —</option>
                 </select>
                 <span asp-validation-for="SpecialisationId" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-warning">Save</button>
-            <a asp-action="Index" class="btn btn-secondary ms-1">Cancel</a>
+            <button type="submit" class="btn btn-warning">Запази</button>
+            <a asp-action="Index" class="btn btn-secondary ms-1">Отказ</a>
         </form>
     </div>
 </div>

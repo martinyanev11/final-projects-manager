@@ -1,13 +1,13 @@
 @model IEnumerable<FinalProjectManager.Data.Models.Student>
 @{
-    ViewData["Title"] = "Topic Assignments";
+    ViewData["Title"] = "Разпределения на теми";
     var unassigned = Model.Count(s => s.TopicId == null);
     var noSupervisor = Model.Count(s => s.SupervisorId == null);
     var noReviewer = Model.Count(s => s.ReviewerId == null && s.SupervisorId != null);
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Assignments</h2>
+    <h2>Разпределения</h2>
     <div class="d-flex gap-2">
         <form asp-action="AutoAssign" method="post">
             @Html.AntiForgeryToken()
@@ -60,12 +60,12 @@ else
     <table class="table table-striped table-hover">
         <thead class="table-dark">
             <tr>
-                <th>Student</th>
-                <th>Specialisation</th>
+                <th>Ученик</th>
+                <th>Специализация</th>
                 <th>Assigned Topic</th>
-                <th>Supervisor</th>
-                <th>Reviewer</th>
-                <th class="text-end">Action</th>
+                <th>Ръководител</th>
+                <th>Рецензент</th>
+                <th class="text-end">Действие</th>
             </tr>
         </thead>
         <tbody>

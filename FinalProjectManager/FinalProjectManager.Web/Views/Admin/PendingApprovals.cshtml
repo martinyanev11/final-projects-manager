@@ -1,6 +1,6 @@
 @model IEnumerable<FinalProjectManager.Data.Models.ApplicationUser>
 @{
-    ViewData["Title"] = "Pending Supervisor Approvals";
+    ViewData["Title"] = "Чакащи одобрения за ръководители";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -18,9 +18,9 @@ else
         <thead class="table-dark">
             <tr>
                 <th>Full Name</th>
-                <th>Email</th>
-                <th>Registered</th>
-                <th class="text-end">Actions</th>
+                <th>Имейл</th>
+                <th>Регистриран</th>
+                <th class="text-end">Действия</th>
             </tr>
         </thead>
         <tbody>
@@ -34,13 +34,13 @@ else
                         <form asp-action="Approve" method="post" class="d-inline">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="userId" value="@user.Id" />
-                            <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                            <button type="submit" class="btn btn-sm btn-success">Одобри</button>
                         </form>
                         <form asp-action="Reject" method="post" class="d-inline ms-1">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="userId" value="@user.Id" />
                             <button type="submit" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Reject and delete this registration?')">Reject</button>
+                                    onclick="return confirm('Отхвърли и изтрий тази регистрация?')">Отхвърли</button>
                         </form>
                     </td>
                 </tr>

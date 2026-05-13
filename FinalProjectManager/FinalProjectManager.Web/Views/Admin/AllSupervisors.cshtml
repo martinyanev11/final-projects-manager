@@ -1,11 +1,11 @@
 @model IEnumerable<FinalProjectManager.Data.Models.ApplicationUser>
 @{
-    ViewData["Title"] = "All Supervisors";
+    ViewData["Title"] = "Всички ръководители";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2>All Supervisors</h2>
-    <a asp-action="PendingApprovals" class="btn btn-outline-warning btn-sm">Pending Approvals</a>
+    <a asp-action="PendingApprovals" class="btn btn-outline-warning btn-sm">Чакащи одобрение</a>
 </div>
 
 @if (!Model.Any())
@@ -18,8 +18,8 @@ else
         <thead class="table-dark">
             <tr>
                 <th>Full Name</th>
-                <th>Email</th>
-                <th>Status</th>
+                <th>Имейл</th>
+                <th>Статус</th>
             </tr>
         </thead>
         <tbody>
@@ -31,11 +31,11 @@ else
                     <td>
                         @if (user.IsApproved)
                         {
-                            <span class="badge bg-success">Approved</span>
+                            <span class="badge bg-success">Одобрен</span>
                         }
                         else
                         {
-                            <span class="badge bg-warning text-dark">Pending</span>
+                            <span class="badge bg-warning text-dark">Чакащ</span>
                         }
                     </td>
                 </tr>

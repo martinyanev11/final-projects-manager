@@ -1,6 +1,6 @@
 @model FinalProjectManager.Data.Models.Specialisation
 @{
-    ViewData["Title"] = "Delete Specialisation";
+    ViewData["Title"] = "Изтрий специализация";
 }
 
 <h2>Delete Specialisation</h2>
@@ -11,10 +11,10 @@
 </div>
 
 <dl class="row">
-    <dt class="col-sm-3">Name</dt>
+    <dt class="col-sm-3">Име</dt>
     <dd class="col-sm-9">@Model.Name</dd>
 
-    <dt class="col-sm-3">Students</dt>
+    <dt class="col-sm-3">Ученици</dt>
     <dd class="col-sm-9">@Model.Students.Count</dd>
 </dl>
 
@@ -27,6 +27,6 @@
 
 <form asp-action="Delete">
     <input type="hidden" asp-for="Id" />
-    <button type="submit" class="btn btn-danger" @(Model.Students.Count > 0 ? "disabled" : "")>Delete</button>
-    <a asp-action="Index" class="btn btn-secondary ms-1">Cancel</a>
+    <button type="submit" class="btn btn-danger" @(Model.Students.Count > 0 ? "disabled" : "")>Изтрий</button>
+    <a asp-action="Index" class="btn btn-secondary ms-1">Отказ</a>
 </form>

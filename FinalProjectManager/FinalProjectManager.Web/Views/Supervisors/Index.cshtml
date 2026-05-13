@@ -1,10 +1,10 @@
 @model IEnumerable<FinalProjectManager.Data.Models.Supervisor>
 @{
-    ViewData["Title"] = "Supervisors";
+    ViewData["Title"] = "Ръководители";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Supervisors</h2>
+    <h2>Ръководители</h2>
     <a asp-action="Create" class="btn btn-primary">+ Add Supervisor</a>
 </div>
 
@@ -14,10 +14,10 @@
                class="form-control" placeholder="Search by name or email..." />
     </div>
     <div class="col-auto">
-        <button type="submit" class="btn btn-outline-secondary">Search</button>
+        <button type="submit" class="btn btn-outline-secondary">Търсене</button>
         @if (!string.IsNullOrEmpty(ViewData["Search"]?.ToString()))
         {
-            <a asp-action="Index" class="btn btn-outline-danger ms-1">Clear</a>
+            <a asp-action="Index" class="btn btn-outline-danger ms-1">Изчисти</a>
         }
     </div>
 </form>
@@ -33,9 +33,9 @@ else
             <tr>
                 <th>#</th>
                 <th>Full Name</th>
-                <th>Email</th>
-                <th>Specialisation</th>
-                <th class="text-end">Actions</th>
+                <th>Имейл</th>
+                <th>Специализация</th>
+                <th class="text-end">Действия</th>
             </tr>
         </thead>
         <tbody>
@@ -47,9 +47,9 @@ else
                     <td>@supervisor.Email</td>
                     <td>@supervisor.Specialisation?.Name</td>
                     <td class="text-end">
-                        <a asp-action="Details" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-info">Details</a>
-                        <a asp-action="Edit" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-warning">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                        <a asp-action="Details" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-info">Детайли</a>
+                        <a asp-action="Edit" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-warning">Редактирай</a>
+                        <a asp-action="Delete" asp-route-id="@supervisor.Id" class="btn btn-sm btn-outline-danger">Изтрий</a>
                     </td>
                 </tr>
             }

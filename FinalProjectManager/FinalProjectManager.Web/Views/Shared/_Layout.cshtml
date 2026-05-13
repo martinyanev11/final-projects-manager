@@ -21,26 +21,26 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
                         </li>
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-warning" href="#" role="button"
-                                   data-bs-toggle="dropdown">Admin</a>
+                                   data-bs-toggle="dropdown">Админ</a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Dashboard</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Табло</a></li>
                                     <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item" asp-controller="Topics" asp-action="Index">Topics</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Students" asp-action="Index">Students</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Supervisors" asp-action="Index">Supervisors</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Topics" asp-action="Index">Теми</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Students" asp-action="Index">Ученици</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Supervisors" asp-action="Index">Ръководители</a></li>
                                     <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item" asp-controller="Assignments" asp-action="Index">Topic Assignments</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Assignments" asp-action="Index">Разпределения на теми</a></li>
                                     <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="PendingApprovals">Pending Approvals</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="AllSupervisors">All Supervisors</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="PendingApprovals">Чакащи одобрение</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="AllSupervisors">Всички ръководители</a></li>
                                     <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item" asp-controller="Specialisations" asp-action="Index">Specialisations</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Specialisations" asp-action="Index">Специализации</a></li>
                                 </ul>
                             </li>
                         }

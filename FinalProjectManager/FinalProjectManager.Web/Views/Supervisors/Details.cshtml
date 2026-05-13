@@ -1,6 +1,6 @@
 @model FinalProjectManager.Data.Models.Supervisor
 @{
-    ViewData["Title"] = "Supervisor Details";
+    ViewData["Title"] = "Детайли за ръководител";
 }
 
 <h2>Supervisor Details</h2>
@@ -10,14 +10,14 @@
     <dt class="col-sm-3">Full Name</dt>
     <dd class="col-sm-9">@Model.FullName</dd>
 
-    <dt class="col-sm-3">Email</dt>
+    <dt class="col-sm-3">Имейл</dt>
     <dd class="col-sm-9">@Model.Email</dd>
 
-    <dt class="col-sm-3">Specialisation</dt>
+    <dt class="col-sm-3">Специализация</dt>
     <dd class="col-sm-9">@Model.Specialisation?.Name</dd>
 </dl>
 
 <div class="mt-3">
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
-    <a asp-action="Index" class="btn btn-secondary ms-1">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Редактирай</a>
+    <a asp-action="Index" class="btn btn-secondary ms-1">Обратно към списъка</a>
 </div>

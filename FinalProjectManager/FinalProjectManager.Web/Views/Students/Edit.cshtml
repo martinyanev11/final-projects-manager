@@ -1,6 +1,6 @@
 @model FinalProjectManager.Data.Models.Student
 @{
-    ViewData["Title"] = "Edit Student";
+    ViewData["Title"] = "Редактирай ученик";
 }
 
 <h2>Edit Student</h2>
@@ -25,7 +25,7 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="SpecialisationId" class="form-label">Specialisation</label>
+                <label asp-for="SpecialisationId" class="form-label">Специализация</label>
                 <select asp-for="SpecialisationId" asp-items="ViewBag.Specialisations" class="form-select">
                     <option value="">— Select specialisation —</option>
                 </select>
@@ -33,15 +33,15 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="ClassName" class="form-label">Class</label>
+                <label asp-for="ClassName" class="form-label">Клас</label>
                 <select asp-for="ClassName" asp-items="ViewBag.ClassNames" class="form-select">
                     <option value="">— Select class —</option>
                 </select>
                 <span asp-validation-for="ClassName" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-warning">Save</button>
-            <a asp-action="Index" class="btn btn-secondary ms-1">Cancel</a>
+            <button type="submit" class="btn btn-warning">Запази</button>
+            <a asp-action="Index" class="btn btn-secondary ms-1">Отказ</a>
         </form>
     </div>
 </div>

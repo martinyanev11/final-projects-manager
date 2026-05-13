@@ -1,6 +1,6 @@
 @model FinalProjectManager.Data.Models.Supervisor
 @{
-    ViewData["Title"] = "Create Supervisor";
+    ViewData["Title"] = "Създай ръководител";
 }
 
 <h2>Create Supervisor</h2>
@@ -24,15 +24,15 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="SpecialisationId" class="form-label">Specialisation</label>
+                <label asp-for="SpecialisationId" class="form-label">Специализация</label>
                 <select asp-for="SpecialisationId" asp-items="ViewBag.Specialisations" class="form-select">
                     <option value="">— Select specialisation —</option>
                 </select>
                 <span asp-validation-for="SpecialisationId" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-primary">Create</button>
-            <a asp-action="Index" class="btn btn-secondary ms-1">Cancel</a>
+            <button type="submit" class="btn btn-primary">Създай</button>
+            <a asp-action="Index" class="btn btn-secondary ms-1">Отказ</a>
         </form>
     </div>
 </div>
