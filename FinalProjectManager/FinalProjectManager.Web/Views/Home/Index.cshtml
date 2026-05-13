@@ -8,9 +8,9 @@
 
         <!-- Left panel -->
         <div class="col-md-5 d-flex flex-column justify-content-center align-items-center text-white p-5"
-             style="background-color: #1a7a5e;">
+             style="background-color: #1565c0;">
             <div class="text-center">
-                <div class="mb-4" style="font-size: 3rem;">📋</div>
+                <img src="/images/buditel-logo.png" alt="СофтУни Будител" class="mb-4" style="max-width:120px; filter:brightness(0) invert(1);" />
                 <h1 class="fw-bold fs-3 mb-3">Управление на дипломни работи</h1>
                 <p class="opacity-75 mb-0">Платформа за управление на теми, ръководители и комисии за защита — СофтУни Будител.</p>
             </div>
@@ -25,7 +25,7 @@
                 <!-- Login -->
                 <a asp-area="Identity" asp-page="/Account/Login"
                    class="btn btn-lg w-100 mb-3 text-white fw-semibold"
-                   style="background-color: #1a7a5e; border-color: #1a7a5e;">
+                   style="background-color: #1565c0; border-color: #1565c0;">
                     Вход в системата
                 </a>
 
@@ -40,10 +40,10 @@
                     <div class="col-6">
                         <a asp-area="Identity" asp-page="/Account/Register"
                            class="card text-center text-decoration-none border-2 h-100 role-card"
-                           style="border-color: #1a7a5e !important;">
+                           style="border-color: #1565c0 !important;">
                             <div class="card-body py-3">
                                 <div class="fs-2 mb-2">🎓</div>
-                                <h6 class="fw-bold mb-1" style="color: #1a7a5e;">Ученик</h6>
+                                <h6 class="fw-bold mb-1" style="color: #1565c0;">Ученик</h6>
                                 <p class="text-muted small mb-0">Достъп до тема и ръководител</p>
                             </div>
                         </a>
@@ -51,10 +51,10 @@
                     <div class="col-6">
                         <a asp-controller="SupervisorRegistration" asp-action="Register"
                            class="card text-center text-decoration-none border-2 h-100 role-card"
-                           style="border-color: #1a7a5e !important;">
+                           style="border-color: #1565c0 !important;">
                             <div class="card-body py-3">
                                 <div class="fs-2 mb-2">👨‍🏫</div>
-                                <h6 class="fw-bold mb-1" style="color: #1a7a5e;">Учител</h6>
+                                <h6 class="fw-bold mb-1" style="color: #1565c0;">Учител</h6>
                                 <p class="text-muted small mb-0">Регистрация и одобрение от администратор</p>
                             </div>
                         </a>
@@ -66,7 +66,7 @@
 
     <style>
         .role-card { transition: box-shadow .15s; }
-        .role-card:hover { box-shadow: 0 4px 16px rgba(26,122,94,.25); }
+        .role-card:hover { box-shadow: 0 4px 16px rgba(21,101,192,.25); }
     </style>
 }
 else if (User.IsInRole("Admin"))
