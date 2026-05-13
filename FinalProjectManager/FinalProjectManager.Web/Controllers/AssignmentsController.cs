@@ -108,7 +108,7 @@ public class AssignmentsController : Controller
         try
         {
             await _assignmentService.AssignTopicAsync(vm.StudentId, vm.TopicId);
-            TempData["Success"] = "Topic assignment updated.";
+            TempData["Success"] = "Зададената тема беше обновена.";
             return RedirectToAction(nameof(Index));
         }
         catch (InvalidOperationException ex)
@@ -120,4 +120,10 @@ public class AssignmentsController : Controller
             return View(vm);
         }
     }
+}
+          return View(vm);
+        }
+    }
+}
+}
 }
