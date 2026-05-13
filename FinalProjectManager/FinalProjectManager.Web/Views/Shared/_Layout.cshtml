@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Final Project Manager</title>
+    <title>@ViewData["Title"] - Дипломни Работи</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
@@ -12,7 +12,7 @@
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom">
             <div class="container">
                 <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
-                    📋 FP Manager
+                    📋 Дипломни Работи
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarNav">
@@ -21,7 +21,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
                         </li>
                         @if (User.IsInRole("Admin"))
                         {
@@ -59,7 +59,7 @@
 
     <footer class="border-top mt-5 py-3 text-muted text-center small">
         <div class="container">
-            &copy; @DateTime.Now.Year — Final Project Manager
+            &copy; @DateTime.Now.Year — Дипломни Работи · СофтУни Будител
         </div>
     </footer>
 
