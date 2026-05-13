@@ -21,6 +21,8 @@ public class ApplicationUserClaimsFactory : UserClaimsPrincipalFactory<Applicati
     {
         var identity = await base.GenerateClaimsAsync(user);
         identity.AddClaim(new Claim("IsApproved", user.IsApproved.ToString().ToLower()));
+        if (!string.IsNullOrEmpty(user.FullName))
+            identity.AddClaim(new Claim("FullName", user.FullName));
         return identity;
     }
 }

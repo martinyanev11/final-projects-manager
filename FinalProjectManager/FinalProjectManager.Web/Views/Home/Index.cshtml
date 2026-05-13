@@ -1,28 +1,27 @@
+@using FinalProjectManager.Data.Models
 @{
     ViewData["Title"] = "Начало";
 }
 
 @if (!User.Identity!.IsAuthenticated)
 {
-    <div class="row g-0 min-vh-80" style="min-height: 82vh;">
+    <div class="row g-0" style="min-height: 82vh;">
 
-        <!-- Left panel -->
         <div class="col-md-5 d-flex flex-column justify-content-center align-items-center text-white p-5"
              style="background-color: #1565c0;">
             <div class="text-center">
-                <img src="/images/buditel-logo.svg" alt="СофтУни Будител" class="mb-4" style="max-width:120px; filter:brightness(0) invert(1);" />
+                <img src="/images/buditel-logo.svg" alt="СофтУни Будител" class="mb-4"
+                     style="max-width:120px; filter:brightness(0) invert(1);" />
                 <h1 class="fw-bold fs-3 mb-3">Управление на дипломни работи</h1>
                 <p class="opacity-75 mb-0">Платформа за управление на теми, ръководители и комисии за защита — СофтУни Будител.</p>
             </div>
         </div>
 
-        <!-- Right panel -->
         <div class="col-md-7 d-flex flex-column justify-content-center align-items-center bg-white p-5">
             <div class="w-100" style="max-width: 400px;">
                 <h2 class="fw-bold mb-1">Добре дошли</h2>
                 <p class="text-muted mb-4">Влезте в профила си или се регистрирайте.</p>
 
-                <!-- Login -->
                 <a asp-area="Identity" asp-page="/Account/Login"
                    class="btn btn-lg w-100 mb-3 text-white fw-semibold"
                    style="background-color: #1565c0; border-color: #1565c0;">
@@ -35,14 +34,13 @@
                     <hr class="flex-grow-1" />
                 </div>
 
-                <!-- Role cards -->
                 <div class="row g-3">
                     <div class="col-6">
                         <a asp-area="Identity" asp-page="/Account/Register"
                            class="card text-center text-decoration-none border-2 h-100 role-card"
                            style="border-color: #1565c0 !important;">
                             <div class="card-body py-3">
-                                <div class="fs-2 mb-2">🎓</div>
+                                <div class="fs-2 mb-2">&#127891;</div>
                                 <h6 class="fw-bold mb-1" style="color: #1565c0;">Ученик</h6>
                                 <p class="text-muted small mb-0">Достъп до тема и ръководител</p>
                             </div>
@@ -53,7 +51,7 @@
                            class="card text-center text-decoration-none border-2 h-100 role-card"
                            style="border-color: #1565c0 !important;">
                             <div class="card-body py-3">
-                                <div class="fs-2 mb-2">👨‍🏫</div>
+                                <div class="fs-2 mb-2">&#128104;&#8205;&#127979;</div>
                                 <h6 class="fw-bold mb-1" style="color: #1565c0;">Учител</h6>
                                 <p class="text-muted small mb-0">Регистрация и одобрение от администратор</p>
                             </div>
@@ -72,13 +70,132 @@
 else if (User.IsInRole("Admin"))
 {
     <div class="text-center mt-5">
-        <h4>Добре дошли, <strong>@User.Identity!.Name</strong>.</h4>
-        <a asp-controller="Admin" asp-action="Index" class="btn btn-success mt-3">Към административния панел</a>
+        <h4 class="fw-bold mb-1">Добре дошли, <span style="color:#1565c0;">@(User.FindFirst("FullName")?.Value ?? User.Identity!.Name)</span>.</h4>
+        <p class="text-muted mb-4">Влезте в административния панел, за да управлявате системата.</p>
+        <a asp-controller="Admin" asp-action="Index"
+           class="btn btn-lg text-white fw-semibold px-5" style="background-color:#1565c0;">
+            Към административния панел
+        </a>
     </div>
+}
+else if (User.IsInRole("Student"))
+{
+    var student = ViewBag.Student as Student;
+    <div class="mb-4">
+        <h4 class="fw-bold mb-0">Добре дошли, <span style="color:#1565c0;">@(student?.FullName ?? User.Identity!.Name)</span>.</h4>
+        <p class="text-muted small">Клас 12@(student?.ClassName) &middot; @(student?.Specialisation?.Name)</p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted small text-uppercase fw-semibold mb-2">Тема</h6>
+                    @if (student?.Topic != null)
+                    {
+                        <p class="fw-semibold mb-0" style="color:#1565c0;">@student.Topic.Title</p>
+                    }
+                    else
+                    {
+                        <p class="text-muted fst-italic mb-0">Не е разпределена</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted small text-uppercase fw-semibold mb-2">Ръководител</h6>
+                    @if (student?.Supervisor != null)
+                    {
+                        <p class="fw-semibold mb-1" style="color:#1565c0;">@student.Supervisor.FullName</p>
+                        <p class="text-muted small mb-0">@student.Supervisor.Email</p>
+                    }
+                    else
+                    {
+                        <p class="text-muted fst-italic mb-0">Не е разпределен</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted small text-uppercase fw-semibold mb-2">Рецензент</h6>
+                    @if (student?.Reviewer != null)
+                    {
+                        <p class="fw-semibold mb-1" style="color:#1565c0;">@student.Reviewer.FullName</p>
+                        <p class="text-muted small mb-0">@student.Reviewer.Email</p>
+                    }
+                    else
+                    {
+                        <p class="text-muted fst-italic mb-0">Не е разпределен</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+else if (User.IsInRole("Supervisor"))
+{
+    var supervisor = ViewBag.Supervisor as Supervisor;
+    var students = supervisor?.SupervisedStudents?.OrderBy(s => s.ClassName).ThenBy(s => s.FullName).ToList();
+
+    <div class="mb-4">
+        <h4 class="fw-bold mb-0">Добре дошли, <span style="color:#1565c0;">@(supervisor?.FullName ?? User.Identity!.Name)</span>.</h4>
+        <p class="text-muted small">@(supervisor?.Specialisation?.Name)</p>
+    </div>
+
+    <h5 class="fw-semibold mb-3">Мои ученици</h5>
+
+    @if (students == null || !students.Any())
+    {
+        <div class="alert alert-info">Все още нямате назначени ученици.</div>
+    }
+    else
+    {
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Пълно Ime</th>
+                    <th>Клас</th>
+                    <th>Специализация</th>
+                    <th>Тема</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ var i = 1; }
+                @foreach (var s in students)
+                {
+                    <tr>
+                        <td>@(i++)</td>
+                        <td>@s.FullName</td>
+                        <td>12@(s.ClassName)</td>
+                        <td>@s.Specialisation?.Name</td>
+                        <td>
+                            @if (s.Topic != null)
+                            {
+                                <span class="badge" style="background-color:#1565c0;">@s.Topic.Title</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Не е разпределена</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 }
 else
 {
     <div class="text-center mt-5">
-        <h4>Добре дошли, <strong>@User.Identity!.Name</strong>.</h4>
+        <h4>Добре дошли, <strong>@(User.FindFirst("FullName")?.Value ?? User.Identity!.Name)</strong>.</h4>
     </div>
 }
