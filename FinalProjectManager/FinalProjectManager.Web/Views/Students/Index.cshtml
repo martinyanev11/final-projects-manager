@@ -70,7 +70,7 @@ else
                         <td>@student.FullName</td>
                         <td>@student.Email</td>
                         <td>@student.Specialisation?.Name</td>
-                        <td>12@student.ClassName</td>
+                        <td>12@(student.ClassName)</td>
                         <td class="text-end">
                             <a asp-action="Details" asp-route-id="@student.Id" class="btn btn-sm btn-outline-secondary">Детайли</a>
                             <a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-sm btn-outline-warning">Редактирай</a>
