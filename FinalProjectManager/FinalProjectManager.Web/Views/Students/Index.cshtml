@@ -55,16 +55,17 @@ else
         <tbody>
             @foreach (var group in grouped)
             {
-                <tr class="table-active">
+                var rowNum = 1;
+                <tr>
                     <td colspan="5" class="fw-semibold" style="background-color:#e3f0fc; color:#1565c0;">
                         Клас 12@group.Key
                         <span class="badge ms-2" style="background-color:#1565c0;">@group.Count() ученика</span>
                     </td>
                 </tr>
-                @foreach (var student in group)
+                @foreach (var student in group.OrderBy(s => s.FullName))
                 {
                     <tr>
-                        <td>@student.Id</td>
+                        <td>@(rowNum++)</td>
                         <td>@student.FullName</td>
                         <td>@student.Email</td>
                         <td>@student.Specialisation?.Name</td>
